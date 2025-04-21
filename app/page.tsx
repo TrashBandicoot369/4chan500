@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { Header } from "@/components/header"
-import { TickerTable } from "@/components/ticker-table"
+import { MemeSignalTable } from "@/components/ticker-table"
 import { SubmissionForm } from "@/components/submission-form"
-import { TrendingTickers } from "@/components/trending-tickers"
-import { MarketSentiment } from "@/components/market-sentiment"
+import { TrendingMemeSignals } from "@/components/trending-tickers"
+import { MemeSentiment } from "@/components/market-sentiment"
 import { initialMemes } from "@/lib/data"
 import type { MemeTicker } from "@/lib/types"
 
@@ -31,8 +31,8 @@ export default function Home() {
     const terminalAlertMessages = [
       "SIGNAL: NEW MEME FORMAT DETECTED",
       "ALERT: PATTERN RECOGNITION COMPLETE",
-      "WARNING: EXTREME VOLATILITY RISK",
-      "PRIORITY: VIRALITY THRESHOLD EXCEEDED",
+      "WARNING: EXTREME VIRALITY RISK",
+      "PRIORITY: ENGAGEMENT THRESHOLD EXCEEDED",
       "NOTICE: AI CONFIDENCE INTERVAL EXPANDED"
     ];
     
@@ -63,7 +63,7 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Update market sentiment based on submission frequency
+  // Update sentiment based on submission frequency
   useEffect(() => {
     if (submissionCount > 5) {
       setSentiment("bullish")
@@ -109,9 +109,9 @@ export default function Home() {
     <main className="min-h-screen bg-[#000] font-mono text-black relative">
       <div className="container mx-auto px-2 py-4 max-w-6xl">
         <Header />
-        <MarketSentiment sentiment={sentiment} />
-        <TrendingTickers trendingMemes={trendingMemes} />
-        <TickerTable memes={sortedMemes} onSort={handleSort} sortConfig={sortConfig} />
+        <MemeSentiment sentiment={sentiment} />
+        <TrendingMemeSignals trendingMemes={trendingMemes} />
+        <MemeSignalTable memes={sortedMemes} onSort={handleSort} sortConfig={sortConfig} />
         <SubmissionForm onSubmit={handleSubmit} />
       </div>
       

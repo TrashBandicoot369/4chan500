@@ -2,14 +2,14 @@
 
 import { useEffect, useState, useRef } from "react"
 import Image from "next/image"
-import { formatCurrency, formatPercentage } from "@/lib/utils"
+import { formatLulzScore, formatPercentage, formatVibeShift, getMemeHeatIndex } from "@/lib/utils"
 import type { MemeTicker } from "@/lib/types"
 
-interface TrendingTickersProps {
+interface TrendingMemeSignalsProps {
   trendingMemes: MemeTicker[]
 }
 
-export function TrendingTickers({ trendingMemes }: TrendingTickersProps) {
+export function TrendingMemeSignals({ trendingMemes }: TrendingMemeSignalsProps) {
   const [aiScores, setAiScores] = useState<{[key: string]: {score: string, visible: boolean}}>({});
   
   // Initialize AI scores on component mount
@@ -17,7 +17,7 @@ export function TrendingTickers({ trendingMemes }: TrendingTickersProps) {
     const scores: {[key: string]: {score: string, visible: boolean}} = {};
     trendingMemes.forEach(meme => {
       scores[meme.id] = {
-        score: (meme.volume / 1000000).toFixed(1),
+        score: getMemeHeatIndex(meme.volume).toString(),
         visible: false
       };
     });
@@ -37,7 +37,7 @@ export function TrendingTickers({ trendingMemes }: TrendingTickersProps) {
 
   // Create ticker display with duplicates for infinite scroll effect
   const tickerText = trendingMemes.map(meme => 
-    `$${meme.ticker}:${formatCurrency(meme.price)} ${formatPercentage(meme.percentChange)}`
+    `#${meme.ticker}:${formatLulzScore(meme.price)} ${formatVibeShift(meme.percentChange)}`
   ).join(' • ');
   
   // Create duplicate for smooth scrolling
@@ -87,8 +87,8 @@ export function TrendingTickers({ trendingMemes }: TrendingTickersProps) {
     <div className="border border-[#555555] mb-2 bg-[#171717]">
       <div className="border-b border-[#555555] bg-[#13233a] px-2 py-1">
         <div className="flex justify-between">
-          <h2 className="font-bold text-[#ffd75e]">TOP TRENDING MEMES</h2>
-          <span className="text-[#6ab6fd] text-xs">BLMBG RNKNG</span>
+          <h2 className="font-bold text-[#ffd75e]">TOP VIRAL MEME SIGNALS</h2>
+          <span className="text-[#6ab6fd] text-xs">AI RANKED</span>
         </div>
       </div>
       
@@ -100,12 +100,12 @@ export function TrendingTickers({ trendingMemes }: TrendingTickersProps) {
       </div>
       
       <div className="px-2 py-1 bg-[#171717]">
-        <div className="text-xs text-[#6ab6fd] mb-1">Real-time engagement velocity | Sorted by AI score</div>
+        <div className="text-xs text-[#6ab6fd] mb-1">Real-time engagement velocity | Sorted by Meme Heat Index</div>
         <div className="grid grid-cols-5 gap-1">
           {trendingMemes.map((meme) => (
             <div key={meme.id} className="border border-[#555555] bg-[#13233a] p-1 relative">
               <div className="absolute top-0 right-0 bg-[#8a171a] text-white text-xs px-1 flex items-center">
-                <span className="mr-1 text-[#6ab6fd]">AI:</span>
+                <span className="mr-1 text-[#6ab6fd]">HEAT:</span>
                 {aiScores[meme.id]?.visible ? (
                   <div className="typing-container">
                     <span className="typing-text text-[#ffd75e]">{aiScores[meme.id]?.score}</span>
@@ -115,7 +115,7 @@ export function TrendingTickers({ trendingMemes }: TrendingTickersProps) {
                   <span className="cursor"></span>
                 )}
               </div>
-              <div className="font-bold text-[#ffd75e]">{meme.ticker}</div>
+              <div className="font-bold text-[#ffd75e]">#{meme.ticker}</div>
               <div className="w-full h-[36px] relative mb-1 border border-[#555555]">
                 <Image
                   src={meme.imageUrl || "/placeholder.svg"}
@@ -127,10 +127,10 @@ export function TrendingTickers({ trendingMemes }: TrendingTickersProps) {
                 />
               </div>
               <div className={`${meme.percentChange >= 0 ? "text-[#00b04d]" : "text-[#d7282f]"} ${Math.abs(meme.percentChange) > 10 ? (meme.percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}>
-                {formatCurrency(meme.price)} ({formatPercentage(meme.percentChange)})
+                {formatLulzScore(meme.price)} ({formatVibeShift(meme.percentChange)})
               </div>
               <div className="text-[#6ab6fd] text-xs mt-1 flex justify-between">
-                <span>VOL:</span>
+                <span>IMP:</span>
                 <span className="text-[#ffd75e]">{Math.floor(meme.volume / 1000)}K</span>
               </div>
             </div>

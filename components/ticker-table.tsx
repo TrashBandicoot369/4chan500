@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { formatCurrency, formatNumber, formatPercentage } from "@/lib/utils"
+import { formatLulzScore, formatNumber, formatPercentage, formatVibeShift, getLulzTooltip } from "@/lib/utils"
 import type { MemeTicker } from "@/lib/types"
 
-interface TickerTableProps {
+interface MemeSignalTableProps {
   memes: MemeTicker[]
   onSort: (key: keyof MemeTicker) => void
   sortConfig: {
@@ -14,8 +14,9 @@ interface TickerTableProps {
   } | null
 }
 
-export function TickerTable({ memes, onSort, sortConfig }: TickerTableProps) {
+export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTableProps) {
   const [numericValues, setNumericValues] = useState<{[key: string]: {price: number, percentChange: number, volume: number}}>({});
+  const [showLulzTooltip, setShowLulzTooltip] = useState<string | null>(null);
   
   // Initialize values and start animation effect
   useEffect(() => {
@@ -88,10 +89,10 @@ export function TickerTable({ memes, onSort, sortConfig }: TickerTableProps) {
       <div className="static-noise opacity-[0.02]"></div>
       
       <div className="border-b border-[#555555] bg-[#13233a] px-2 py-1">
-        <h2 className="font-bold text-[#ffd75e]">4CHAN500 MEME INDEX FUND COMPONENTS</h2>
+        <h2 className="font-bold text-[#ffd75e]">TOP MEME SIGNAL THREADS</h2>
         <div className="text-xs text-[#6ab6fd] mt-0.5 flex justify-between">
           <span>AI-tracked real-time meme data | Sorted by {sortConfig?.key || 'default'} ({sortConfig?.direction || 'neutral'})</span>
-          <span>MEMX <span className="text-[#ffd75e]">500</span> Index</span>
+          <span>MEME <span className="text-[#ffd75e]">SCANNER</span> 500</span>
         </div>
       </div>
       <div className="overflow-x-auto">
@@ -99,7 +100,7 @@ export function TickerTable({ memes, onSort, sortConfig }: TickerTableProps) {
           <thead>
             <tr className="bg-[#13233a] text-[#ffd75e]">
               <th className="px-2 py-1 text-left border border-[#555555] cursor-pointer" onClick={() => onSort("ticker")}>
-                TICKER{getSortIndicator("ticker")}
+                SIGNAL ID{getSortIndicator("ticker")}
               </th>
               <th className="px-2 py-1 text-left border border-[#555555]">
                 IMG
@@ -107,17 +108,27 @@ export function TickerTable({ memes, onSort, sortConfig }: TickerTableProps) {
               <th className="px-2 py-1 text-left border border-[#555555]">
                 MEME ID
               </th>
-              <th className="px-2 py-1 text-right border border-[#555555] cursor-pointer" onClick={() => onSort("price")}>
-                LULZ{getSortIndicator("price")}
+              <th 
+                className="px-2 py-1 text-right border border-[#555555] cursor-pointer relative" 
+                onClick={() => onSort("price")}
+                onMouseEnter={() => setShowLulzTooltip("header")}
+                onMouseLeave={() => setShowLulzTooltip(null)}
+              >
+                LULZ SCORE{getSortIndicator("price")}
+                {showLulzTooltip === "header" && (
+                  <div className="absolute right-0 top-full mt-1 bg-[#000] border border-[#555555] p-1 text-xs text-white z-20 w-40">
+                    {getLulzTooltip()}
+                  </div>
+                )}
               </th>
               <th
                 className="px-2 py-1 text-right border border-[#555555] cursor-pointer"
                 onClick={() => onSort("percentChange")}
               >
-                CHG%{getSortIndicator("percentChange")}
+                VIBE SHIFT %{getSortIndicator("percentChange")}
               </th>
               <th className="px-2 py-1 text-right border border-[#555555] cursor-pointer" onClick={() => onSort("volume")}>
-                IMP{getSortIndicator("volume")}
+                IMPRESSIONS{getSortIndicator("volume")}
               </th>
             </tr>
           </thead>
@@ -144,19 +155,30 @@ export function TickerTable({ memes, onSort, sortConfig }: TickerTableProps) {
                   <td className="px-2 py-1 border border-[#555555]">
                     <div className="text-[#6ab6fd]">{meme.title}</div>
                     <div className="text-xs text-[#ffd75e]">
-                      Rank: <span className="text-white">#{Math.floor(Math.random() * 500) + 1}</span>
-                      <span className="ml-2 text-[#6ab6fd]">Conf:</span> <span className="text-white">{(Math.random() * 0.3 + 0.7).toFixed(2)}</span>
+                      Meme Heat: <span className="text-white">#{Math.floor(Math.random() * 500) + 1}</span>
+                      <span className="ml-2 text-[#6ab6fd]">Virality:</span> <span className="text-white">{(Math.random() * 0.3 + 0.7).toFixed(2)}</span>
                     </div>
                   </td>
-                  <td className={`px-2 py-1 border border-[#555555] text-right text-white ${isBigMover ? (meme.percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}>
-                    {formatCurrency(currentValues.price)}
+                  <td 
+                    className={`px-2 py-1 border border-[#555555] text-right text-white ${isBigMover ? (meme.percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}
+                    onMouseEnter={() => setShowLulzTooltip(meme.id)}
+                    onMouseLeave={() => setShowLulzTooltip(null)}
+                  >
+                    <div className="relative">
+                      {formatLulzScore(currentValues.price)}
+                      {showLulzTooltip === meme.id && (
+                        <div className="absolute right-0 bottom-full mb-1 bg-[#000] border border-[#555555] p-1 text-xs text-white z-20 w-40">
+                          {getLulzTooltip()}
+                        </div>
+                      )}
+                    </div>
                   </td>
                   <td
                     className={`px-2 py-1 border border-[#555555] text-right ${
                       meme.percentChange >= 0 ? "text-[#00b04d]" : "text-[#d7282f]"
                     } ${isBigMover ? (meme.percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}
                   >
-                    {formatPercentage(currentValues.percentChange)}
+                    {formatVibeShift(currentValues.percentChange)}
                   </td>
                   <td className="px-2 py-1 border border-[#555555] text-right">
                     <div className="text-white count-up">{formatNumber(currentValues.volume)}</div>
@@ -171,7 +193,7 @@ export function TickerTable({ memes, onSort, sortConfig }: TickerTableProps) {
         </table>
       </div>
       <div className="px-2 py-1 text-xs text-[#6ab6fd] border-t border-[#555555]">
-        <p>Last update: {new Date().toLocaleTimeString()} | AI-generated metrics | MEMX <span className="text-[#ffd75e]">Bloomberg Professional</span></p>
+        <p>Last update: {new Date().toLocaleTimeString()} | AI-generated metrics | MEME <span className="text-[#ffd75e]">Trend Analysis</span></p>
       </div>
     </div>
   )

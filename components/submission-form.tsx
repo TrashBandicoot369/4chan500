@@ -79,7 +79,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
     }
 
     if (!ticker.match(/^[A-Z0-9]{1,5}$/)) {
-      setError("Ticker must be 1-5 uppercase letters/numbers")
+      setError("Signal ID must be 1-5 uppercase letters/numbers")
       return
     }
 
@@ -119,7 +119,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
       <div className="border-b border-[#555555] bg-[#13233a] px-2 py-1">
         <h2 className="font-bold text-[#ffd75e] flex justify-between">
           <span>MEME SCAN REQUEST</span>
-          <span className="text-xs text-[#6ab6fd]">BLMBG &lt;MEME&gt; SCAN</span>
+          <span className="text-xs text-[#6ab6fd]">MEME ANALYSIS TOOL</span>
         </h2>
       </div>
       <div className="p-2">
@@ -132,7 +132,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
         <form onSubmit={handleSubmit} className="grid gap-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div>
-              <label className="block mb-1 text-xs text-[#ffd75e]">TICKER SYMBOL</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">MEME SIGNAL ID</label>
               <input
                 type="text"
                 value={ticker}
@@ -143,7 +143,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
               />
             </div>
             <div>
-              <label className="block mb-1 text-xs text-[#ffd75e]">DESCRIPTION</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">MEME DESCRIPTION</label>
               <input
                 type="text"
                 value={title}
@@ -156,7 +156,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
 
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="block mb-1 text-xs text-[#ffd75e]">LULZ</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">ESTIMATED LULZ SCORE</label>
               <input
                 type="number"
                 value={price}
@@ -168,7 +168,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
               />
             </div>
             <div>
-              <label className="block mb-1 text-xs text-[#ffd75e]">TREND %</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">VIBE SWING %</label>
               <input
                 type="number"
                 value={percentChange}
@@ -179,7 +179,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
               />
             </div>
             <div>
-              <label className="block mb-1 text-xs text-[#ffd75e]">IMPRESSIONS</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">ESTIMATED REACH</label>
               <input
                 type="number"
                 value={volume}
@@ -214,7 +214,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
           </div>
           {isAnalyzing && (
             <div className="text-xs text-[#6ab6fd] text-center">
-              Running impression analysis | Processing sentiment metrics | Computing market impact
+              Running impression analysis | Processing sentiment metrics | Computing social impact
             </div>
           )}
         </form>

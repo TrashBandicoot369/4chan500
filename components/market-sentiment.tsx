@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react"
 
-interface MarketSentimentProps {
+interface MemeSentimentProps {
   sentiment: "bullish" | "bearish" | "neutral"
 }
 
-export function MarketSentiment({ sentiment }: MarketSentimentProps) {
+export function MemeSentiment({ sentiment }: MemeSentimentProps) {
   const [metrics, setMetrics] = useState({
     impressions: "0M",
     virality: "0.00",
@@ -61,22 +61,22 @@ export function MarketSentiment({ sentiment }: MarketSentimentProps) {
   const getSentimentColor = () => {
     switch (sentiment) {
       case "bullish":
-        return "text-[#00b04d]" // Bloomberg green
+        return "text-[#00b04d]" // Green
       case "bearish":
-        return "text-[#d7282f]" // Bloomberg red
+        return "text-[#d7282f]" // Red
       default:
-        return "text-[#ffd75e]" // Bloomberg yellow
+        return "text-[#ffd75e]" // Yellow
     }
   }
 
   const getSentimentText = () => {
     switch (sentiment) {
       case "bullish":
-        return "BULLISH: Social sentiment positive, meme reach expanding 🚀"
+        return "ASCENDING: Social sentiment positive, meme reach expanding 🚀"
       case "bearish":
-        return "BEARISH: Negative engagement metrics, reduced impression count 📉"
+        return "DESCENDING: Negative engagement metrics, reduced impression count 📉"
       default:
-        return "NEUTRAL: Balanced social indicators, steady impression rate 🦀"
+        return "STABLE: Balanced social indicators, steady impression rate 🦀"
     }
   }
 
@@ -115,7 +115,7 @@ export function MarketSentiment({ sentiment }: MarketSentimentProps) {
         <div className="mb-2 text-[#6ab6fd]">{getAIInsight()}</div>
         <div className="grid grid-cols-3 gap-2 text-xs border-t border-[#555555] pt-2">
           <div className="px-2 py-1 bg-[#13233a] border border-[#555555]">
-            <div className="text-[#6ab6fd] font-semibold">TWITTER IMPRESSIONS</div>
+            <div className="text-[#6ab6fd] font-semibold">SOCIAL IMPRESSIONS</div>
             <div className={`${getSentimentColor()} count-up`}>{metrics.impressions}</div>
           </div>
           <div className="px-2 py-1 bg-[#13233a] border border-[#555555]">
