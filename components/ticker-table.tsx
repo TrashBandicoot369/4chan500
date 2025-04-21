@@ -22,69 +22,76 @@ export function TickerTable({ memes, onSort, sortConfig }: TickerTableProps) {
   }
 
   return (
-    <div className="border-2 border-black mb-4">
-      <div className="border-b-2 border-black bg-[#99cc99] p-2">
-        <h2 className="font-bold">4CHAN500 MEME INDEX FUND - AI TRACKED COMPONENTS</h2>
-        <p className="text-xs mt-1">Live tracking and analysis of the top memes across social platforms</p>
+    <div className="border border-[#555555] mb-2 bg-[#171717]">
+      <div className="border-b border-[#555555] bg-[#13233a] px-2 py-1">
+        <h2 className="font-bold text-[#ffd75e]">4CHAN500 MEME INDEX FUND COMPONENTS</h2>
+        <div className="text-xs text-[#6ab6fd] mt-0.5 flex justify-between">
+          <span>AI-tracked real-time meme data | Sorted by {sortConfig?.key || 'default'} ({sortConfig?.direction || 'neutral'})</span>
+          <span>MEMX <span className="text-[#ffd75e]">500</span> Index</span>
+        </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse">
+        <table className="w-full">
           <thead>
-            <tr className="bg-[#ddffdd] border-b border-black">
-              <th className="p-2 text-left border-r border-black cursor-pointer" onClick={() => onSort("ticker")}>
-                Ticker{getSortIndicator("ticker")}
+            <tr className="bg-[#13233a] text-[#ffd75e]">
+              <th className="px-2 py-1 text-left border border-[#555555] cursor-pointer" onClick={() => onSort("ticker")}>
+                TICKER{getSortIndicator("ticker")}
               </th>
-              <th className="p-2 text-left border-r border-black">Image</th>
-              <th className="p-2 text-left border-r border-black">Meme</th>
-              <th className="p-2 text-right border-r border-black cursor-pointer" onClick={() => onSort("price")}>
-                Index Value{getSortIndicator("price")}
+              <th className="px-2 py-1 text-left border border-[#555555]">
+                IMG
+              </th>
+              <th className="px-2 py-1 text-left border border-[#555555]">
+                MEME ID
+              </th>
+              <th className="px-2 py-1 text-right border border-[#555555] cursor-pointer" onClick={() => onSort("price")}>
+                VALUE{getSortIndicator("price")}
               </th>
               <th
-                className="p-2 text-right border-r border-black cursor-pointer"
+                className="px-2 py-1 text-right border border-[#555555] cursor-pointer"
                 onClick={() => onSort("percentChange")}
               >
-                24h Change{getSortIndicator("percentChange")}
+                CHG%{getSortIndicator("percentChange")}
               </th>
-              <th className="p-2 text-right cursor-pointer" onClick={() => onSort("volume")}>
-                Social Impressions{getSortIndicator("volume")}
+              <th className="px-2 py-1 text-right border border-[#555555] cursor-pointer" onClick={() => onSort("volume")}>
+                IMP{getSortIndicator("volume")}
               </th>
             </tr>
           </thead>
           <tbody>
             {memes.map((meme, index) => (
-              <tr key={meme.id} className={`${index % 2 === 0 ? "bg-white" : "bg-[#f0fff0]"} hover:bg-[#ddffdd]`}>
-                <td className="p-2 border-r border-t border-black font-bold">${meme.ticker}</td>
-                <td className="p-2 border-r border-t border-black">
-                  <div className="w-[60px] h-[60px] relative overflow-hidden">
+              <tr key={meme.id} className={`${index % 2 === 0 ? "bg-[#171717]" : "bg-[#1c1c1c]"} hover:bg-[#13233a]`}>
+                <td className="px-2 py-1 border border-[#555555] font-bold text-[#ffd75e]">${meme.ticker}</td>
+                <td className="px-2 py-1 border border-[#555555]">
+                  <div className="w-[40px] h-[40px] relative">
                     <Image
                       src={meme.imageUrl || "/placeholder.svg"}
                       alt={meme.title}
                       fill
-                      sizes="60px"
-                      className="object-cover border border-black"
+                      sizes="40px"
+                      className="object-cover border border-[#555555]"
                       style={{ objectFit: "cover" }}
                     />
                   </div>
                 </td>
-                <td className="p-2 border-r border-t border-black">
-                  <div>{meme.title}</div>
-                  <div className="text-xs text-gray-600">
-                    Popularity Rank: #{Math.floor(Math.random() * 500) + 1} 
-                    <span className="ml-2">AI Confidence: {(Math.random() * 0.3 + 0.7).toFixed(2)}</span>
+                <td className="px-2 py-1 border border-[#555555]">
+                  <div className="text-[#6ab6fd]">{meme.title}</div>
+                  <div className="text-xs text-[#ffd75e]">
+                    Rank: <span className="text-white">#{Math.floor(Math.random() * 500) + 1}</span>
+                    <span className="ml-2 text-[#6ab6fd]">Conf:</span> <span className="text-white">{(Math.random() * 0.3 + 0.7).toFixed(2)}</span>
                   </div>
                 </td>
-                <td className="p-2 border-r border-t border-black text-right">{formatCurrency(meme.price)}</td>
+                <td className="px-2 py-1 border border-[#555555] text-right text-white">{formatCurrency(meme.price)}</td>
                 <td
-                  className={`p-2 border-r border-t border-black text-right ${
-                    meme.percentChange >= 0 ? "text-green-700" : "text-red-700"
+                  className={`px-2 py-1 border border-[#555555] text-right ${
+                    meme.percentChange >= 0 ? "text-[#00b04d]" : "text-[#d7282f]"
                   }`}
                 >
                   {formatPercentage(meme.percentChange)}
                 </td>
-                <td className="p-2 border-t border-black text-right">
-                  {formatNumber(meme.volume)}
-                  <div className="text-xs text-gray-600">
-                    {meme.percentChange >= 0 ? "↑" : "↓"} {formatNumber(Math.abs(Math.floor(meme.volume * meme.percentChange / 100)))} today
+                <td className="px-2 py-1 border border-[#555555] text-right">
+                  <div className="text-white">{formatNumber(meme.volume)}</div>
+                  <div className="text-xs text-[#6ab6fd]">
+                    {meme.percentChange >= 0 ? "↑" : "↓"} {formatNumber(Math.abs(Math.floor(meme.volume * meme.percentChange / 100)))}
                   </div>
                 </td>
               </tr>
@@ -92,9 +99,8 @@ export function TickerTable({ memes, onSort, sortConfig }: TickerTableProps) {
           </tbody>
         </table>
       </div>
-      <div className="p-2 text-xs bg-[#ddffdd] border-t border-black">
-        <p>* AI-generated metrics based on real-time social media analysis across Twitter, Reddit, and other platforms</p>
-        <p>* Index values and impressions updated every 5 minutes through our algorithmic sentiment tracking system</p>
+      <div className="px-2 py-1 text-xs text-[#6ab6fd] border-t border-[#555555]">
+        <p>Last update: {new Date().toLocaleTimeString()} | AI-generated metrics | MEMX <span className="text-[#ffd75e]">Bloomberg Professional</span></p>
       </div>
     </div>
   )

@@ -8,20 +8,24 @@ interface TrendingTickersProps {
 
 export function TrendingTickers({ trendingMemes }: TrendingTickersProps) {
   return (
-    <div className="border-2 border-black mb-4">
-      <div className="border-b-2 border-black bg-[#99cc99] p-2">
-        <h2 className="font-bold">AI-DETECTED TRENDING MEMES</h2>
+    <div className="border border-[#555555] mb-2 bg-[#171717]">
+      <div className="border-b border-[#555555] bg-[#13233a] px-2 py-1">
+        <div className="flex justify-between">
+          <h2 className="font-bold text-[#ffd75e]">TOP TRENDING MEMES</h2>
+          <span className="text-[#6ab6fd] text-xs">BLMBG RNKNG</span>
+        </div>
       </div>
-      <div className="p-2 bg-[#ddffdd]">
-        <p className="text-xs mb-2 font-medium">Real-time analysis of social media engagement and impression velocity</p>
-        <div className="grid grid-cols-5 gap-2 text-sm">
+      <div className="px-2 py-1 bg-[#171717]">
+        <div className="text-xs text-[#6ab6fd] mb-1">Real-time engagement velocity | Sorted by AI score</div>
+        <div className="grid grid-cols-5 gap-1">
           {trendingMemes.map((meme) => (
-            <div key={meme.id} className="border border-black p-1 relative">
-              <div className="absolute top-0 right-0 bg-[#99cc99] text-xs px-1 border-l border-b border-black">
-                AI Score: {(meme.volume / 1000000).toFixed(1)}
+            <div key={meme.id} className="border border-[#555555] bg-[#13233a] p-1 relative">
+              <div className="absolute top-0 right-0 bg-[#8a171a] text-white text-xs px-1 flex items-center">
+                <span className="mr-1 text-[#6ab6fd]">AI:</span>
+                <span className="text-[#ffd75e]">{(meme.volume / 1000000).toFixed(1)}</span>
               </div>
-              <div className="font-bold">${meme.ticker}</div>
-              <div className="w-full h-[40px] relative mb-1">
+              <div className="font-bold text-[#ffd75e]">${meme.ticker}</div>
+              <div className="w-full h-[36px] relative mb-1 border border-[#555555]">
                 <Image
                   src={meme.imageUrl || "/placeholder.svg"}
                   alt={meme.title}
@@ -31,11 +35,12 @@ export function TrendingTickers({ trendingMemes }: TrendingTickersProps) {
                   style={{ objectFit: "cover" }}
                 />
               </div>
-              <div className={meme.percentChange >= 0 ? "text-green-700" : "text-red-700"}>
+              <div className={meme.percentChange >= 0 ? "text-[#00b04d]" : "text-[#d7282f]"}>
                 {formatCurrency(meme.price)} ({formatPercentage(meme.percentChange)})
               </div>
-              <div className="text-xs mt-1">
-                Mentions: {Math.floor(meme.volume / 1000)}K
+              <div className="text-[#6ab6fd] text-xs mt-1 flex justify-between">
+                <span>VOL:</span>
+                <span className="text-[#ffd75e]">{Math.floor(meme.volume / 1000)}K</span>
               </div>
             </div>
           ))}

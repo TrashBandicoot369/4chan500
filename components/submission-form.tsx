@@ -115,72 +115,76 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
   }
 
   return (
-    <div className="border-2 border-black mb-4">
-      <div className="border-b-2 border-black bg-[#99cc99] p-2">
-        <h2 className="font-bold">SUGGEST MEME FOR AI ANALYSIS</h2>
+    <div className="border border-[#555555] mb-2 bg-[#171717]">
+      <div className="border-b border-[#555555] bg-[#13233a] px-2 py-1">
+        <h2 className="font-bold text-[#ffd75e] flex justify-between">
+          <span>MEME SCAN REQUEST</span>
+          <span className="text-xs text-[#6ab6fd]">BLMBG &lt;MEME&gt; SCAN</span>
+        </h2>
       </div>
-      <div className="p-4 bg-[#ddffdd]">
-        {error && <div className="mb-4 p-2 border-2 border-red-500 bg-red-100 text-red-700">{error}</div>}
-        <p className="text-sm mb-3">
-          Our AI system continuously monitors social platforms for emerging memes. 
-          Submit a meme you've observed gaining traction for inclusion in our analysis.
+      <div className="p-2">
+        {error && (
+          <div className="mb-3 p-1 border border-[#d7282f] bg-[#13233a] text-[#d7282f]">{error}</div>
+        )}
+        <p className="text-xs mb-2 text-[#6ab6fd]">
+          Enter parameters for AI meme analysis. Our system will evaluate impressions and sentiment metrics.
         </p>
-        <form onSubmit={handleSubmit} className="grid gap-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="grid gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div>
-              <label className="block mb-1 font-bold">Proposed Ticker Symbol</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">TICKER SYMBOL</label>
               <input
                 type="text"
                 value={ticker}
                 onChange={(e) => setTicker(e.target.value.toUpperCase())}
-                className="w-full p-2 border-2 border-black font-mono"
+                className="w-full p-1 border border-[#555555] bg-[#13233a] text-[#ffd75e] font-mono text-sm"
                 placeholder="MEME"
                 maxLength={5}
               />
             </div>
             <div>
-              <label className="block mb-1 font-bold">Meme Name/Description</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">DESCRIPTION</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 border-2 border-black font-mono"
-                placeholder="Descriptive Name"
+                className="w-full p-1 border border-[#555555] bg-[#13233a] text-[#ffd75e] font-mono text-sm"
+                placeholder="Name"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="block mb-1 font-bold">Estimated Value</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">EST VALUE</label>
               <input
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                className="w-full p-2 border-2 border-black font-mono"
+                className="w-full p-1 border border-[#555555] bg-[#13233a] text-[#ffd75e] font-mono text-sm"
                 placeholder="420.69"
                 step="0.01"
                 min="0"
               />
             </div>
             <div>
-              <label className="block mb-1 font-bold">Recent Trend (%)</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">TREND %</label>
               <input
                 type="number"
                 value={percentChange}
                 onChange={(e) => setPercentChange(e.target.value)}
-                className="w-full p-2 border-2 border-black font-mono"
+                className="w-full p-1 border border-[#555555] bg-[#13233a] text-[#ffd75e] font-mono text-sm"
                 placeholder="-69.42"
                 step="0.01"
               />
             </div>
             <div>
-              <label className="block mb-1 font-bold">Est. Daily Impressions</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">IMPRESSIONS</label>
               <input
                 type="number"
                 value={volume}
                 onChange={(e) => setVolume(e.target.value)}
-                className="w-full p-2 border-2 border-black font-mono"
+                className="w-full p-1 border border-[#555555] bg-[#13233a] text-[#ffd75e] font-mono text-sm"
                 placeholder="8008135"
                 step="1"
                 min="0"
@@ -189,24 +193,30 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
           </div>
 
           <div>
-            <label className="block mb-1 font-bold">Meme Format</label>
-            <p className="text-sm mb-2">Our AI will identify and classify the meme format from our database.</p>
-            <div className="p-2 border-2 border-black bg-gray-100 text-gray-700">AI-classified format will be assigned upon analysis</div>
+            <label className="block mb-1 text-xs text-[#ffd75e]">FORMAT ANALYSIS</label>
+            <div className="p-1 border border-[#555555] bg-[#13233a] text-[#6ab6fd] text-xs">
+              AI auto-classify: [image recognition] ≫ [semantic analysis] ≫ [format determination]
+            </div>
           </div>
 
           <div>
             <button
               type="submit"
               disabled={isAnalyzing}
-              className={`px-4 py-2 border-2 border-black font-bold w-full ${
+              className={`p-1 border border-[#555555] font-bold w-full text-sm ${
                 isAnalyzing 
-                  ? "bg-yellow-200 text-yellow-800" 
-                  : "bg-[#99cc99] hover:bg-[#88bb88]"
+                  ? "bg-[#8a171a] text-white" 
+                  : "bg-[#13233a] hover:bg-[#23335a] text-[#ffd75e]"
               }`}
             >
-              {isAnalyzing ? "AI ANALYZING SUBMISSION..." : "SUBMIT FOR AI ANALYSIS"}
+              {isAnalyzing ? "⟳ PROCESSING REQUEST..." : "EXECUTE MEME ANALYSIS"}
             </button>
           </div>
+          {isAnalyzing && (
+            <div className="text-xs text-[#6ab6fd] text-center">
+              Running impression analysis | Processing sentiment metrics | Computing market impact
+            </div>
+          )}
         </form>
       </div>
     </div>

@@ -6,11 +6,11 @@ export function MarketSentiment({ sentiment }: MarketSentimentProps) {
   const getSentimentColor = () => {
     switch (sentiment) {
       case "bullish":
-        return "bg-green-200 text-green-800 border-green-500"
+        return "text-[#00b04d]" // Bloomberg green
       case "bearish":
-        return "bg-red-200 text-red-800 border-red-500"
+        return "text-[#d7282f]" // Bloomberg red
       default:
-        return "bg-yellow-200 text-yellow-800 border-yellow-500"
+        return "text-[#ffd75e]" // Bloomberg yellow
     }
   }
 
@@ -36,28 +36,39 @@ export function MarketSentiment({ sentiment }: MarketSentimentProps) {
     }
   }
 
+  const getMetricData = () => {
+    switch (sentiment) {
+      case "bullish":
+        return { impressions: "↑ 24.8M", virality: "0.83", diversity: "High" }
+      case "bearish":
+        return { impressions: "↓ 12.3M", virality: "0.32", diversity: "Low" }
+      default:
+        return { impressions: "→ 18.5M", virality: "0.57", diversity: "Medium" }
+    }
+  }
+
+  const metrics = getMetricData();
+
   return (
-    <div className={`border-2 border-black mb-4 ${getSentimentColor()}`}>
-      <div className="border-b-2 border-black p-2">
-        <div className="flex justify-between items-center">
-          <span className="font-bold">AI MARKET SENTIMENT ANALYSIS</span>
-          <span className="font-bold">{getSentimentText()}</span>
-        </div>
+    <div className="border border-[#555555] mb-2 bg-[#171717]">
+      <div className="border-b border-[#555555] bg-[#13233a] px-2 py-1 flex justify-between items-center">
+        <span className="font-bold text-[#ffd75e]">MEME SENTIMENT ANALYSIS</span>
+        <span className={`font-bold ${getSentimentColor()}`}>{getSentimentText()}</span>
       </div>
-      <div className="p-2 text-sm">
-        <p className="mb-2">{getAIInsight()}</p>
-        <div className="grid grid-cols-3 gap-2 mt-2 text-xs">
-          <div className="p-1 border border-black bg-white/50 rounded">
-            <p className="font-semibold">Twitter Impressions</p>
-            <p>{sentiment === "bullish" ? "↑ 24.8M" : sentiment === "bearish" ? "↓ 12.3M" : "→ 18.5M"}</p>
+      <div className="px-2 py-1">
+        <div className="mb-2 text-[#6ab6fd]">{getAIInsight()}</div>
+        <div className="grid grid-cols-3 gap-2 text-xs border-t border-[#555555] pt-2">
+          <div className="px-2 py-1 bg-[#13233a] border border-[#555555]">
+            <div className="text-[#6ab6fd] font-semibold">TWITTER IMPRESSIONS</div>
+            <div className={getSentimentColor()}>{metrics.impressions}</div>
           </div>
-          <div className="p-1 border border-black bg-white/50 rounded">
-            <p className="font-semibold">Virality Index</p>
-            <p>{sentiment === "bullish" ? "0.83" : sentiment === "bearish" ? "0.32" : "0.57"}</p>
+          <div className="px-2 py-1 bg-[#13233a] border border-[#555555]">
+            <div className="text-[#6ab6fd] font-semibold">VIRALITY INDEX</div>
+            <div className={getSentimentColor()}>{metrics.virality}</div>
           </div>
-          <div className="p-1 border border-black bg-white/50 rounded">
-            <p className="font-semibold">Format Diversity</p>
-            <p>{sentiment === "bullish" ? "High" : sentiment === "bearish" ? "Low" : "Medium"}</p>
+          <div className="px-2 py-1 bg-[#13233a] border border-[#555555]">
+            <div className="text-[#6ab6fd] font-semibold">FORMAT DIVERSITY</div>
+            <div className={getSentimentColor()}>{metrics.diversity}</div>
           </div>
         </div>
       </div>
