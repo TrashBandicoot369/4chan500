@@ -67,6 +67,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
   const [percentChange, setPercentChange] = useState("")
   const [volume, setVolume] = useState("")
   const [error, setError] = useState("")
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -86,63 +87,72 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
     const randomImageIndex = Math.floor(Math.random() * memeImages.length)
     const randomImage = memeImages[randomImageIndex]
 
-    const newMeme: MemeTicker = {
-      id: generateId(),
-      ticker,
-      title,
-      imageUrl: randomImage,
-      price: Number.parseFloat(price),
-      percentChange: Number.parseFloat(percentChange),
-      volume: Number.parseFloat(volume),
-      timestamp: Date.now(),
-    }
-
-    onSubmit(newMeme)
-
-    // Reset form
-    setTicker("")
-    setTitle("")
-    setPrice("")
-    setPercentChange("")
-    setVolume("")
-    setError("")
+    // Simulate AI analysis
+    setIsAnalyzing(true)
+    setTimeout(() => {
+      const newMeme: MemeTicker = {
+        id: generateId(),
+        ticker,
+        title,
+        imageUrl: randomImage,
+        price: Number.parseFloat(price),
+        percentChange: Number.parseFloat(percentChange),
+        volume: Number.parseFloat(volume),
+        timestamp: Date.now(),
+      }
+  
+      onSubmit(newMeme)
+  
+      // Reset form
+      setTicker("")
+      setTitle("")
+      setPrice("")
+      setPercentChange("")
+      setVolume("")
+      setError("")
+      setIsAnalyzing(false)
+    }, 1500)
   }
 
   return (
     <div className="border-2 border-black mb-4">
       <div className="border-b-2 border-black bg-[#99cc99] p-2">
-        <h2 className="font-bold">SUBMIT NEW MEME STONK</h2>
+        <h2 className="font-bold">SUGGEST MEME FOR AI ANALYSIS</h2>
       </div>
       <div className="p-4 bg-[#ddffdd]">
         {error && <div className="mb-4 p-2 border-2 border-red-500 bg-red-100 text-red-700">{error}</div>}
+        <p className="text-sm mb-3">
+          Our AI system continuously monitors social platforms for emerging memes. 
+          Submit a meme you've observed gaining traction for inclusion in our analysis.
+        </p>
         <form onSubmit={handleSubmit} className="grid gap-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block mb-1 font-bold">Meme Ticker (e.g., $KEK)</label>
+              <label className="block mb-1 font-bold">Proposed Ticker Symbol</label>
               <input
                 type="text"
                 value={ticker}
                 onChange={(e) => setTicker(e.target.value.toUpperCase())}
                 className="w-full p-2 border-2 border-black font-mono"
-                placeholder="STONK"
+                placeholder="MEME"
                 maxLength={5}
               />
             </div>
             <div>
-              <label className="block mb-1 font-bold">Meme Title</label>
+              <label className="block mb-1 font-bold">Meme Name/Description</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full p-2 border-2 border-black font-mono"
-                placeholder="To The Moon"
+                placeholder="Descriptive Name"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block mb-1 font-bold">Fake Price ($)</label>
+              <label className="block mb-1 font-bold">Estimated Value</label>
               <input
                 type="number"
                 value={price}
@@ -154,7 +164,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
               />
             </div>
             <div>
-              <label className="block mb-1 font-bold">Fake % Change</label>
+              <label className="block mb-1 font-bold">Recent Trend (%)</label>
               <input
                 type="number"
                 value={percentChange}
@@ -165,7 +175,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
               />
             </div>
             <div>
-              <label className="block mb-1 font-bold">Fake Volume</label>
+              <label className="block mb-1 font-bold">Est. Daily Impressions</label>
               <input
                 type="number"
                 value={volume}
@@ -179,14 +189,22 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
           </div>
 
           <div>
-            <label className="block mb-1 font-bold">Meme Image</label>
-            <p className="text-sm mb-2">A random meme image will be assigned to your ticker.</p>
-            <div className="p-2 border-2 border-black bg-gray-100 text-gray-700">Random meme image selected on submission</div>
+            <label className="block mb-1 font-bold">Meme Format</label>
+            <p className="text-sm mb-2">Our AI will identify and classify the meme format from our database.</p>
+            <div className="p-2 border-2 border-black bg-gray-100 text-gray-700">AI-classified format will be assigned upon analysis</div>
           </div>
 
           <div>
-            <button type="submit" className="px-4 py-2 bg-[#99cc99] border-2 border-black font-bold hover:bg-[#88bb88]">
-              SUBMIT MEME STONK
+            <button
+              type="submit"
+              disabled={isAnalyzing}
+              className={`px-4 py-2 border-2 border-black font-bold w-full ${
+                isAnalyzing 
+                  ? "bg-yellow-200 text-yellow-800" 
+                  : "bg-[#99cc99] hover:bg-[#88bb88]"
+              }`}
+            >
+              {isAnalyzing ? "AI ANALYZING SUBMISSION..." : "SUBMIT FOR AI ANALYSIS"}
             </button>
           </div>
         </form>
