@@ -1,0 +1,220 @@
+/* Animations for 4CHAN500 Trading Dashboard */
+
+/* Ticker scroll animation */
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.ticker-scroll {
+  white-space: nowrap;
+  display: inline-block;
+  animation: tickerScroll 20s linear infinite;
+}
+
+.ticker-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+/* Flashing price animations */
+@keyframes flashGreen {
+  0%, 100% {
+    color: #00b04d;
+  }
+  50% {
+    color: #00ff4d;
+    text-shadow: 0 0 5px rgba(0, 255, 77, 0.7);
+  }
+}
+
+@keyframes flashRed {
+  0%, 100% {
+    color: #d7282f;
+  }
+  50% {
+    color: #ff282f;
+    text-shadow: 0 0 5px rgba(255, 40, 47, 0.7);
+  }
+}
+
+.flash-green {
+  animation: flashGreen 1s ease-in-out infinite;
+}
+
+.flash-red {
+  animation: flashRed 1s ease-in-out infinite;
+}
+
+/* AI Score typing animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.typing-container {
+  display: inline-block;
+  position: relative;
+}
+
+.typing-text {
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  animation: typing 1s steps(10, end) forwards;
+}
+
+.cursor {
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background-color: #ffd75e;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+  vertical-align: middle;
+}
+
+/* Sentiment flashing */
+@keyframes sentimentPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.pulse-sentiment {
+  animation: sentimentPulse 2s infinite;
+}
+
+@keyframes redUnderline {
+  0%, 100% {
+    text-decoration-color: transparent;
+  }
+  50% {
+    text-decoration-color: #d7282f;
+  }
+}
+
+.red-underline {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  animation: redUnderline 2s infinite;
+}
+
+/* Count-up animation */
+@keyframes countUp {
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.count-up {
+  display: inline-block;
+  animation: countUp 0.5s ease-out forwards;
+}
+
+/* Random noise/static effect */
+@keyframes staticNoise {
+  0% {
+    opacity: 0.05;
+  }
+  5% {
+    opacity: 0.2;
+  }
+  10% {
+    opacity: 0.05;
+  }
+  15% {
+    opacity: 0.1;
+  }
+  20% {
+    opacity: 0.05;
+  }
+  30% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 0.05;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  60% {
+    opacity: 0.05;
+  }
+  70% {
+    opacity: 0.1;
+  }
+  80% {
+    opacity: 0.05;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.05;
+  }
+}
+
+.static-noise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.05;
+  animation: staticNoise 2s steps(2) infinite;
+  z-index: 10;
+}
+
+/* Alert box animation */
+@keyframes alertFlash {
+  0%, 100% {
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+}
+
+.alert-box {
+  position: absolute;
+  background-color: rgba(138, 23, 26, 0.7);
+  border: 1px solid #d7282f;
+  color: #ffd75e;
+  padding: 5px 10px;
+  font-weight: bold;
+  font-size: 12px;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: alertFlash 4s forwards;
+} 

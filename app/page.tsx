@@ -17,6 +17,51 @@ export default function Home() {
   } | null>(null)
   const [sentiment, setSentiment] = useState<"bullish" | "bearish" | "neutral">("neutral")
   const [submissionCount, setSubmissionCount] = useState(0)
+  
+  // Add random terminal alert boxes
+  const [terminalAlerts, setTerminalAlerts] = useState<{
+    id: number;
+    text: string;
+    position: {top: string, left: string};
+    visible: boolean;
+  }[]>([]);
+  
+  // Function to generate random terminal alerts
+  useEffect(() => {
+    const terminalAlertMessages = [
+      "SIGNAL: NEW MEME FORMAT DETECTED",
+      "ALERT: PATTERN RECOGNITION COMPLETE",
+      "WARNING: EXTREME VOLATILITY RISK",
+      "PRIORITY: VIRALITY THRESHOLD EXCEEDED",
+      "NOTICE: AI CONFIDENCE INTERVAL EXPANDED"
+    ];
+    
+    const showRandomAlert = () => {
+      const text = terminalAlertMessages[Math.floor(Math.random() * terminalAlertMessages.length)];
+      const top = `${Math.floor(Math.random() * 70)}%`;
+      const left = `${Math.floor(Math.random() * 70)}%`;
+      const id = Date.now();
+      
+      setTerminalAlerts(prev => [...prev, {
+        id,
+        text,
+        position: {top, left},
+        visible: true
+      }]);
+      
+      // Remove alert after 5 seconds
+      setTimeout(() => {
+        setTerminalAlerts(prev => prev.filter(alert => alert.id !== id));
+      }, 5000);
+    };
+    
+    // Show alert every 15-25 seconds
+    const interval = setInterval(() => {
+      showRandomAlert();
+    }, Math.random() * 10000 + 15000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   // Update market sentiment based on submission frequency
   useEffect(() => {
@@ -61,7 +106,7 @@ export default function Home() {
   const trendingMemes = [...memes].sort((a, b) => b.volume - a.volume).slice(0, 5)
 
   return (
-    <main className="min-h-screen bg-[#eeffee] font-mono text-black">
+    <main className="min-h-screen bg-[#000] font-mono text-black relative">
       <div className="container mx-auto px-2 py-4 max-w-6xl">
         <Header />
         <MarketSentiment sentiment={sentiment} />
@@ -69,6 +114,20 @@ export default function Home() {
         <TickerTable memes={sortedMemes} onSort={handleSort} sortConfig={sortConfig} />
         <SubmissionForm onSubmit={handleSubmit} />
       </div>
+      
+      {/* Terminal Alert Boxes */}
+      {terminalAlerts.map(alert => (
+        <div 
+          key={alert.id}
+          className="alert-box"
+          style={{
+            top: alert.position.top,
+            left: alert.position.left
+          }}
+        >
+          {alert.text}
+        </div>
+      ))}
     </main>
   )
 }

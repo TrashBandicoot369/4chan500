@@ -156,7 +156,7 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
 
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="block mb-1 text-xs text-[#ffd75e]">EST VALUE</label>
+              <label className="block mb-1 text-xs text-[#ffd75e]">LULZ</label>
               <input
                 type="number"
                 value={price}

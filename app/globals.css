@@ -6,14 +6,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
 
 :root {
-  --bloomberg-black: #0c0c0c;
-  --bloomberg-dark: #171717;
+  --bloomberg-black: #000000;
+  --bloomberg-dark: #111111;
   --bloomberg-navy: #13233a;
   --bloomberg-orange: #ff8000;
   --bloomberg-blue: #6ab6fd;
   --bloomberg-yellow: #ffd75e;
-  --bloomberg-green: #00b04d;
-  --bloomberg-red: #d7282f;
+  --bloomberg-green: #00ff4d;
+  --bloomberg-red: #ff282f;
   --bloomberg-header: #8a171a;
   --bloomberg-gray: #373737;
   --bloomberg-light-gray: #555555;
@@ -22,7 +22,7 @@
 body {
   font-family: 'Roboto Mono', monospace;
   background-color: var(--bloomberg-black);
-  color: var(--bloomberg-yellow);
+  color: #00ff66;
 }
 
 /* Bloomberg-style header */
@@ -101,7 +101,7 @@ input:focus, select:focus, textarea:focus {
 
 /* Remove default focus styles and add custom ones */
 *:focus {
-  outline: 2px solid #000000;
+  outline: 2px solid var(--bloomberg-green);
   outline-offset: 0;
 }
 
@@ -112,15 +112,15 @@ input:focus, select:focus, textarea:focus {
 }
 
 ::-webkit-scrollbar-track {
-  background: #ddffdd;
-  border: 1px solid #000000;
+  background: #111111;
+  border: 1px solid #333333;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #99cc99;
-  border: 1px solid #000000;
+  background: #00ff66;
+  border: 1px solid #333333;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #88bb88;
+  background: #00cc55;
 }

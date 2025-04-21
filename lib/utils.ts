@@ -5,6 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export function getRandomMemeSymbol(): string {
+  const symbols = ["Ꞩ", "₥", "₿", "Ƶ", "Ξ"]
+  return symbols[Math.floor(Math.random() * symbols.length)]
+}
+
 export function formatNumber(num: number): string {
   return new Intl.NumberFormat("en-US", {
     maximumFractionDigits: 2,
@@ -12,11 +17,10 @@ export function formatNumber(num: number): string {
 }
 
 export function formatCurrency(num: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
+  const symbol = getRandomMemeSymbol()
+  return `${symbol}${new Intl.NumberFormat("en-US", {
     maximumFractionDigits: 2,
-  }).format(num)
+  }).format(num)}`
 }
 
 export function formatPercentage(num: number): string {
