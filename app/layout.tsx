@@ -3,8 +3,12 @@ import "../styles/animations.css"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "4CHAN500 - Bloomberg Terminal",
-  description: "AI-powered meme index fund tracker",
+  title: "4CHAN500 - Meme Signal Scanner",
+  description: "AI-powered meme trend analysis and tracking",
+  icons: {
+    icon: '/4chan500_favicon.jpg',
+    apple: '/4chan500_favicon.jpg',
+  },
 }
 
 export default function RootLayout({
