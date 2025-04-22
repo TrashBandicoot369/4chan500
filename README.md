@@ -1,43 +1,135 @@
 # 4CHAN500: The AI-Powered Meme Index Fund
 
+A web application for collecting and analyzing meme and trading data.
+
+## Project Structure
+
+```
+.
+├── app/
+│   ├── globals.css               # Global CSS styles
+│   ├── layout.tsx                # Main application layout component
+│   └── page.tsx                  # Main page component
+│
+├── components/
+│   ├── ui/                       # UI component library
+│   │   ├── accordion.tsx
+│   │   ├── alert-dialog.tsx
+│   │   ├── alert.tsx
+│   │   ├── aspect-ratio.tsx
+│   │   ├── avatar.tsx
+│   │   ├── badge.tsx
+│   │   ├── breadcrumb.tsx
+│   │   ├── button.tsx
+│   │   ├── calendar.tsx
+│   │   ├── card.tsx
+│   │   ├── carousel.tsx
+│   │   ├── chart.tsx
+│   │   ├── checkbox.tsx
+│   │   ├── collapsible.tsx
+│   │   ├── command.tsx
+│   │   ├── context-menu.tsx
+│   │   ├── dialog.tsx
+│   │   ├── drawer.tsx
+│   │   ├── dropdown-menu.tsx
+│   │   ├── form.tsx
+│   │   ├── hover-card.tsx
+│   │   ├── input-otp.tsx
+│   │   ├── input.tsx
+│   │   ├── label.tsx
+│   │   ├── menubar.tsx
+│   │   ├── navigation-menu.tsx
+│   │   ├── pagination.tsx
+│   │   ├── popover.tsx
+│   │   ├── progress.tsx
+│   │   ├── radio-group.tsx
+│   │   ├── resizable.tsx
+│   │   ├── scroll-area.tsx
+│   │   ├── select.tsx
+│   │   ├── separator.tsx
+│   │   ├── sheet.tsx
+│   │   ├── sidebar.tsx
+│   │   ├── skeleton.tsx
+│   │   ├── slider.tsx
+│   │   ├── sonner.tsx
+│   │   ├── switch.tsx
+│   │   ├── table.tsx
+│   │   ├── tabs.tsx
+│   │   ├── textarea.tsx
+│   │   ├── toast.tsx
+│   │   ├── toaster.tsx
+│   │   ├── toggle-group.tsx
+│   │   ├── toggle.tsx
+│   │   ├── tooltip.tsx
+│   │   ├── use-mobile.tsx
+│   │   └── use-toast.ts
+│   ├── header.tsx                # Header component
+│   ├── market-sentiment.tsx      # Market sentiment component
+│   ├── submission-form.tsx       # Form for submissions
+│   ├── theme-provider.tsx        # Theme provider component
+│   ├── ticker-table.tsx          # Table for displaying tickers
+│   └── trending-tickers.tsx      # Trending tickers component
+│
+├── hooks/
+│   ├── use-mobile.tsx            # Hook for mobile detection
+│   └── use-toast.ts              # Hook for toast notifications
+│
+├── lib/
+│   ├── data.ts                   # Data utilities
+│   ├── types.ts                  # TypeScript type definitions
+│   └── utils.ts                  # Utility functions
+│
+├── public/                       # Public assets
+│
+├── styles/                       # Additional styles
+│
+├── chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json  # Firebase service account key
+├── components.json               # Component configuration
+├── debug_kym_page.html           # Debug HTML for KYM scraper
+├── firebase_admin_setup.py       # Firebase Admin SDK setup
+├── kym_debug.html                # Debug HTML for KYM scraper
+├── kym_scraper.py                # Know Your Meme scraper script
+├── next.config.mjs               # Next.js configuration
+├── package.json                  # NPM package configuration
+├── pnpm-lock.yaml                # PNPM lock file
+├── postcss.config.mjs            # PostCSS configuration
+├── tailwind.config.ts            # Tailwind CSS configuration
+├── trending_memes.json           # JSON output from the KYM scraper
+└── tsconfig.json                 # TypeScript configuration
+```
+
 ## The First Meta-Memecoin
 
-4CHAN500 is an AI agent powered meme index fund - the first true meta-memecoin in the crypto space. Using an advanced agentic LLM framework, the 4CHAN500 continuously ranks the popularity, impressions, and social sentiment of the top 500 memes across Twitter and the broader internet, updated in real-time and displayed through our web application.
+## Firebase Integration
 
-## Features
+The project uses Firebase Admin SDK for backend services. The setup is in `firebase_admin_setup.py`, which initializes Firebase with the service account key and provides a Firestore client for database operations.
 
-- **Real-time Meme Tracking**: Monitors and ranks the top 500 memes across social media platforms
-- **AI-Powered Analytics**: Evaluates popularity, impression counts, and social sentiment
-- **Automated Twitter Updates**: Regularly posts performance metrics and trend analysis
-- **Meme Generation**: Creates new memes based on current events using the meme index as training data
-- **Web Dashboard**: Interactive interface to explore the meme ecosystem
+## Scripts
 
-## The Value Proposition
+- `kym_scraper.py` - A Python script to scrape trending memes from Know Your Meme website.
 
-The 4CHAN500 represents the entire meme ecosystem, allowing investors to gain broad exposure to the hottest sector of crypto this cycle. No longer will normies need to spend countless hours trying to determine which individual dog or cat token to buy.
+## Technology Stack
 
-Like the S&P 500 index for traditional stocks, the 4CHAN500 is the memecoin of choice for:
-- Newcomers to crypto seeking simplified exposure
-- Traditional finance analysts looking for sector representation
-- Value investors skeptical of individual memecoins that fade in and out of popularity
-
-## Why 4CHAN500?
-
-Individual memecoins rise and fall, but meme culture as a whole continues to dominate social media and crypto discussions. By investing in 4CHAN500, you're investing in the entire meme ecosystem rather than trying to pick the next trending token.
-
-## Technical Implementation
-
-The platform leverages:
-- Advanced language models for sentiment analysis
-- Real-time data processing for meme tracking
-- Blockchain technology for the index token
-- Web3 integration for portfolio management
-- Automated trading strategies based on meme performance metrics
+- Next.js - React framework
+- TypeScript - Type-safe JavaScript
+- Tailwind CSS - Utility-first CSS framework
+- Firebase - Backend and database services
+- Python - For scraping and backend scripts
 
 ## Getting Started
 
-Explore the dashboard to see the current rankings, analysis, and generated content from the 4CHAN500 system.
+1. Install dependencies:
+```
+npm install
+```
 
----
+2. Run the development server:
+```
+npm run dev
+```
 
-*4CHAN500: The meme index for the discerning degenerate* 
+3. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Firebase Setup
+
+Firebase connection is set up using the `firebase_admin_setup.py` script, which needs the service account JSON file to authenticate with Firebase. 

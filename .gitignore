@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+node_modules/
 
 # next.js
 /.next/
@@ -15,9 +16,30 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+firebase-debug.log
+*.log
 
 # env files
 .env*
+.env
+*.env.local
+
+# Firebase private keys
+chan500-firebase-adminsdk-fbsvc-*.json
+
+# Python
+__pycache__/
+pycache/
+
+# Debug files
+kym_debug.png
+*_debug.html
+*_debug_*.html
+debug_*.html
+
+# Editor directories
+.vscode/
+.trash/
 
 # vercel
 .vercel
