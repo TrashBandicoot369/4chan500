@@ -13,41 +13,63 @@ export function initFirebase(): App | null {
   }
 
   try {
+    // Add debug logging for environment variables
+    console.log('Checking Firebase environment variables...');
+    console.log('FIREBASE_PROJECT_ID exists:', !!process.env.FIREBASE_PROJECT_ID);
+    console.log('FIREBASE_CLIENT_EMAIL exists:', !!process.env.FIREBASE_CLIENT_EMAIL);
+    console.log('FIREBASE_PRIVATE_KEY exists:', !!process.env.FIREBASE_PRIVATE_KEY);
+    
     // Check for environment variables (Vercel production)
     if (
       process.env.FIREBASE_PROJECT_ID &&
       process.env.FIREBASE_CLIENT_EMAIL &&
       process.env.FIREBASE_PRIVATE_KEY
     ) {
+      // Log some more info for debugging
+      console.log('Initializing Firebase with environment variables');
+      
+      // Check if private key starts with the expected format
+      const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+      console.log('Private key format check:', 
+        privateKey.includes('-----BEGIN PRIVATE KEY-----') ? 'valid' : 'invalid');
+      
       // Initialize with environment variables
       const app = initializeApp({
         credential: cert({
           projectId: process.env.FIREBASE_PROJECT_ID,
           clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-          // Handle escaped newlines in the private key
-          privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+          // First remove any surrounding quotes that might have been added
+          privateKey: privateKey
+            .replace(/^["']/, '')
+            .replace(/["']$/, '')
+            .replace(/\\n/g, '\n'),
         }),
       });
       
-      console.log('Firebase Admin initialized with environment variables');
+      console.log('Firebase Admin initialized with environment variables successfully');
       return app;
     } 
     
     // Fallback to local service account file (development)
     else {
+      // Log fallback attempt
+      console.log('Environment variables not found, trying local service account file...');
+      
       try {
         // Only import these in development to avoid bundling issues
         const { readFileSync } = require('fs');
         const path = require('path');
         
         const serviceAccountPath = path.join(process.cwd(), 'chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json');
+        console.log('Looking for service account at:', serviceAccountPath);
+        
         const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'));
         
         const app = initializeApp({
           credential: cert(serviceAccount),
         });
         
-        console.log('Firebase Admin initialized with local service account');
+        console.log('Firebase Admin initialized with local service account successfully');
         return app;
       } catch (error) {
         console.warn('Could not initialize Firebase with local service account:', error);
@@ -74,6 +96,7 @@ export function getFirestoreInstance() {
       return getFirestore(app);
     }
     
+    console.warn('No Firebase app available, returning null Firestore instance');
     return null;
   } catch (error) {
     console.error('Error getting Firestore instance:', error);

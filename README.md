@@ -154,9 +154,33 @@ The project is configured to work both locally and on Vercel. For Vercel deploym
 
 If your application shows "Firebase not configured" on Vercel:
 
-1. Check that all three environment variables are set correctly
-2. Verify that the private key includes escaped newlines (`\n`) and is wrapped in quotes
-3. Redeploy the application after making changes to environment variables
+1. **Run the helper script** to generate properly formatted values:
+   ```
+   node scripts/format-firebase-key.js
+   ```
+
+2. **In the Vercel dashboard**:
+   - Go to your project settings
+   - Select "Environment Variables"
+   - Delete any existing Firebase variables
+   - Add these three variables **exactly** as shown in the script output:
+     - `FIREBASE_PROJECT_ID`
+     - `FIREBASE_CLIENT_EMAIL`
+     - `FIREBASE_PRIVATE_KEY` (include the quotes around the value!)
+
+3. **After adding variables**:
+   - Redeploy your application (Project > Deployments > "Redeploy" on your latest deployment)
+   - Or click Settings > Deployments > "Create a new deployment" 
+
+4. **If it still doesn't work**:
+   - Visit the diagnostic endpoint at `/api/firebase-test` on your Vercel deployment
+   - Check the values of the environment variables
+   - Review your Vercel Function logs for any Firebase initialization errors
+
+5. **Common Issues**:
+   - Quotes missing from private key value
+   - Private key format incorrect (needs `\n` for newlines)
+   - Project cached with old environment variables (try a clean redeploy)
 
 ### Local Development
 
