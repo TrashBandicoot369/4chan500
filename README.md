@@ -132,4 +132,28 @@ npm run dev
 
 ## Firebase Setup
 
-Firebase connection is set up using the `firebase_admin_setup.py` script, which needs the service account JSON file to authenticate with Firebase. 
+Firebase connection is set up using the `firebase_admin_setup.py` script, which needs the service account JSON file to authenticate with Firebase.
+
+## Deploying to Vercel
+
+### Firebase Configuration for Vercel
+
+The project is configured to work both locally and on Vercel. For Vercel deployment, you'll need to set the following environment variables:
+
+1. Go to your Vercel project settings
+2. Navigate to the "Environment Variables" section
+3. Add the following variables:
+
+```
+FIREBASE_PROJECT_ID=chan500
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-fbsvc@chan500.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour Private Key Here\n-----END PRIVATE KEY-----\n"
+```
+
+The private key should be copied from your Firebase service account JSON file, with newlines properly escaped as `\n`.
+
+### Local Development
+
+For local development, you can use the Firebase service account JSON file directly. The app is configured to look for `chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json` in the project root.
+
+Alternatively, you can create a `.env.local` file with the same environment variables as above for local development. 
