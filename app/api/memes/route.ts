@@ -73,8 +73,28 @@ export async function GET() {
     
     const db = getFirestore()
     const snapshot = await db.collection("memes").get()
-    const memes = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() as DocumentData }))
-    return NextResponse.json(memes)
+    
+    // Transform Firestore data to expected format with proper data types
+    const memes = snapshot.docs.map((doc) => {
+      const data = doc.data() as DocumentData;
+      
+      // Instead of using vibeShift, just generate a random number between -20 and +20
+      const randomChange = Math.floor(Math.random() * 40) - 20;
+      
+      return {
+        id: doc.id,
+        ticker: data.ticker || 'UNKNOWN',
+        title: data.name || 'Untitled Meme',
+        imageUrl: data.image_url || '',
+        price: typeof data.lulzScore === 'number' ? data.lulzScore : Math.floor(Math.random() * 1000), 
+        percentChange: randomChange, // Use random number instead
+        volume: typeof data.upvotes === 'number' ? data.upvotes : Math.floor(Math.random() * 100000),
+        timestamp: data.created_utc || 0,
+        link: data.link || ''
+      };
+    });
+    
+    return NextResponse.json(memes);
   } catch (error) {
     console.error("Error fetching memes:", error)
     return NextResponse.json(

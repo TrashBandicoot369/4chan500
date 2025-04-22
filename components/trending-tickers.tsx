@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react"
 import Image from "next/image"
-import { formatLulzScore, formatPercentage, formatVibeShift, getMemeHeatIndex } from "@/lib/utils"
+import { formatLulzScore, formatPercentage, formatVibeShift, getMemeHeatIndex } from "@/lib/format-utils"
 import type { MemeTicker } from "@/lib/types"
 
 interface TrendingMemeSignalsProps {

@@ -26,9 +26,9 @@ export default function RootLayout({
           <div className="flex justify-between items-center p-1 bg-[#8a171a] text-white">
             <div className="font-bold">4CHAN500 Terminal</div>
             <div className="flex space-x-2">
-              <span className="px-2 py-0.5 bg-[#13233a] text-[#ffd75e] border border-[#555555]">Help</span>
-              <span className="px-2 py-0.5 bg-[#13233a] text-[#ffd75e] border border-[#555555]">Setup</span>
-              <span className="px-2 py-0.5 bg-[#13233a] text-[#ffd75e] border border-[#555555]">Export</span>
+              <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank" className="px-2 py-0.5 bg-[#13233a] text-[#ffd75e] border border-[#555555]">Help</a>
+              <a href="https://knowyourmeme.com/memes/math-lady-confused-lady" target="_blank" className="px-2 py-0.5 bg-[#13233a] text-[#ffd75e] border border-[#555555]">Setup</a>
+              <a href="https://youtu.be/ejC4L1DjL9g" target="_blank" className="px-2 py-0.5 bg-[#13233a] text-[#ffd75e] border border-[#555555]">Export</a>
             </div>
           </div>
           {children}

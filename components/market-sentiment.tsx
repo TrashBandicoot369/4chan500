@@ -2,132 +2,85 @@
 
 import { useEffect, useState } from "react"
 
-interface MemeSentimentProps {
-  sentiment: "bullish" | "bearish" | "neutral"
-}
+export default function MarketSentiment() {
+  const [summary, setSummary] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null)
 
-export function MemeSentiment({ sentiment }: MemeSentimentProps) {
-  const [metrics, setMetrics] = useState({
-    impressions: "0M",
-    virality: "0.00",
-    diversity: "Low"
-  });
-  
-  // Animate metrics with count-up effect
   useEffect(() => {
-    const targetMetrics = getMetricData();
-    
-    // Extract the numeric part from impressions
-    const targetImpNum = parseFloat(targetMetrics.impressions.replace(/[^\d.-]/g, ''));
-    const targetVirality = parseFloat(targetMetrics.virality);
-    
-    // Start from lower values
-    let currentImpNum = targetImpNum * 0.2;
-    let currentVirality = targetVirality * 0.2;
-    
-    // Animate the values
-    const interval = setInterval(() => {
-      if (currentImpNum < targetImpNum) {
-        currentImpNum += targetImpNum * 0.1;
-        
-        // Format with arrow direction
-        const arrow = targetMetrics.impressions.startsWith("↑") ? "↑" : 
-                     targetMetrics.impressions.startsWith("↓") ? "↓" : "→";
-        
-        setMetrics(prev => ({
-          ...prev,
-          impressions: `${arrow} ${currentImpNum.toFixed(1)}M`
-        }));
+    const fetchSummary = async () => {
+      try {
+        const res = await fetch("/api/sentiment")
+        const data = await res.json()
+        setSummary(data.summary)
+        setLastUpdated(data.updated_at)
+        setLoading(false)
+      } catch (err) {
+        console.error("Failed to fetch sentiment summary", err)
+        setSummary("Unable to load meme market conditions.")
+        setLoading(false)
       }
-      
-      if (currentVirality < targetVirality) {
-        currentVirality += targetVirality * 0.1;
-        setMetrics(prev => ({
-          ...prev,
-          virality: currentVirality.toFixed(2)
-        }));
-      }
-      
-      // Stop once we reach the target values
-      if (currentImpNum >= targetImpNum && currentVirality >= targetVirality) {
-        setMetrics(targetMetrics);
-        clearInterval(interval);
-      }
-    }, 100);
-    
-    return () => clearInterval(interval);
-  }, [sentiment]);
+    }
 
-  const getSentimentColor = () => {
-    switch (sentiment) {
-      case "bullish":
-        return "text-[#00b04d]" // Green
-      case "bearish":
-        return "text-[#d7282f]" // Red
-      default:
-        return "text-[#ffd75e]" // Yellow
+    fetchSummary()
+  }, [])
+
+  // Format the timestamp nicely
+  const formatTimestamp = (timestamp: string) => {
+    if (!timestamp) return null
+    try {
+      const date = new Date(timestamp)
+      return date.toLocaleString()
+    } catch (e) {
+      return timestamp
     }
   }
 
-  const getSentimentText = () => {
-    switch (sentiment) {
-      case "bullish":
-        return "ASCENDING: Social sentiment positive, meme reach expanding 🚀"
-      case "bearish":
-        return "DESCENDING: Negative engagement metrics, reduced impression count 📉"
-      default:
-        return "STABLE: Balanced social indicators, steady impression rate 🦀"
-    }
-  }
-
-  const getAIInsight = () => {
-    switch (sentiment) {
-      case "bullish":
-        return "AI Prediction: Rising meme velocity across platforms. Top formats seeing increased engagement."
-      case "bearish":
-        return "AI Prediction: Declining interaction rates. Meme fatigue detected in primary demographics."
-      default:
-        return "AI Prediction: Stable engagement metrics. New format emergence likely within 48-72 hours."
-    }
-  }
-
-  const getMetricData = () => {
-    switch (sentiment) {
-      case "bullish":
-        return { impressions: "↑ 24.8M", virality: "0.83", diversity: "High" }
-      case "bearish":
-        return { impressions: "↓ 12.3M", virality: "0.32", diversity: "Low" }
-      default:
-        return { impressions: "→ 18.5M", virality: "0.57", diversity: "Medium" }
-    }
-  }
-
-  // Add bearish underline class
-  const sentimentClass = `font-bold ${getSentimentColor()} pulse-sentiment ${sentiment === "bearish" ? "red-underline" : ""}`;
+  const formattedTime = lastUpdated ? formatTimestamp(lastUpdated) : null
 
   return (
-    <div className="border border-[#555555] mb-2 bg-[#171717]">
-      <div className="border-b border-[#555555] bg-[#13233a] px-2 py-1 flex justify-between items-center">
-        <span className="font-bold text-[#ffd75e]">MEME SENTIMENT ANALYSIS</span>
-        <span className={sentimentClass}>{getSentimentText()}</span>
+    <div className="border border-[#333] bg-[#0e1823] rounded-xl p-4 mb-4 text-white">
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-lg font-semibold text-[#ffd75e]">
+          🧠 MEME SENTIMENT ANALYSIS
+        </h2>
+        {!loading && formattedTime && (
+          <span className="text-xs text-[#888]">Updated: {formattedTime}</span>
+        )}
       </div>
-      <div className="px-2 py-1">
-        <div className="mb-2 text-[#6ab6fd]">{getAIInsight()}</div>
-        <div className="grid grid-cols-3 gap-2 text-xs border-t border-[#555555] pt-2">
-          <div className="px-2 py-1 bg-[#13233a] border border-[#555555]">
-            <div className="text-[#6ab6fd] font-semibold">SOCIAL IMPRESSIONS</div>
-            <div className={`${getSentimentColor()} count-up`}>{metrics.impressions}</div>
+      
+      {loading ? (
+        <div className="animate-pulse">
+          <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
+          <div className="h-4 bg-gray-700 rounded w-full mb-2"></div>
+          <div className="h-4 bg-gray-700 rounded w-5/6"></div>
+        </div>
+      ) : (
+        <div>
+          <p className="text-sm text-[#cccccc] mb-3">
+            {summary || "No sentiment data available."}
+          </p>
+          
+          <div className="grid grid-cols-3 gap-3 mt-4 text-xs">
+            <div className="bg-[#111a25] p-2 rounded border border-[#2a3744]">
+              <div className="text-[#6ab6fd] font-semibold mb-1">MEME VELOCITY</div>
+              <div className="text-white">💹 Trending</div>
+            </div>
+            <div className="bg-[#111a25] p-2 rounded border border-[#2a3744]">
+              <div className="text-[#6ab6fd] font-semibold mb-1">FORMAT DIVERSITY</div>
+              <div className="text-white">📊 Medium</div>
+            </div>
+            <div className="bg-[#111a25] p-2 rounded border border-[#2a3744]">
+              <div className="text-[#6ab6fd] font-semibold mb-1">MARKET SIGNAL</div>
+              <div className="text-white">🔮 Watching</div>
+            </div>
           </div>
-          <div className="px-2 py-1 bg-[#13233a] border border-[#555555]">
-            <div className="text-[#6ab6fd] font-semibold">VIRALITY INDEX</div>
-            <div className={`${getSentimentColor()} count-up`}>{metrics.virality}</div>
-          </div>
-          <div className="px-2 py-1 bg-[#13233a] border border-[#555555]">
-            <div className="text-[#6ab6fd] font-semibold">FORMAT DIVERSITY</div>
-            <div className={`${getSentimentColor()} count-up`}>{metrics.diversity}</div>
+          
+          <div className="mt-3 text-xs text-[#aaa] italic border-t border-[#333] pt-2">
+            Powered by AI market analysis. Data may be delayed.
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

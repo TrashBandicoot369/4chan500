@@ -198,25 +198,9 @@ export function SubmissionForm({ onSubmit }: SubmissionFormProps) {
               AI auto-classify: [image recognition] ≫ [semantic analysis] ≫ [format determination]
             </div>
           </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={isAnalyzing}
-              className={`p-1 border border-[#555555] font-bold w-full text-sm ${
-                isAnalyzing 
-                  ? "bg-[#8a171a] text-white" 
-                  : "bg-[#13233a] hover:bg-[#23335a] text-[#ffd75e]"
-              }`}
-            >
-              {isAnalyzing ? "⟳ PROCESSING REQUEST..." : "EXECUTE MEME ANALYSIS"}
-            </button>
-          </div>
-          {isAnalyzing && (
-            <div className="text-xs text-[#6ab6fd] text-center">
-              Running impression analysis | Processing sentiment metrics | Computing social impact
-            </div>
-          )}
+          
+          {/* Hidden submit button to maintain form functionality */}
+          <button type="submit" className="hidden"></button>
         </form>
       </div>
     </div>
