@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { formatLulzScore, formatNumber, formatPercentage, formatVibeShift, getLulzTooltip } from "@/lib/utils"
+import { formatLulzScore, formatNumber, formatPercentage, formatVibeShift, getLulzTooltip, LULZ_SYMBOL } from "@/lib/format-utils"
 import type { MemeTicker } from "@/lib/types"
 
 interface MemeSignalTableProps {
@@ -15,12 +15,13 @@ interface MemeSignalTableProps {
 }
 
 export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTableProps) {
-  const [numericValues, setNumericValues] = useState<{[key: string]: {price: number, percentChange: number, volume: number}}>({});
+  type NumericValueMap = Record<string, {price: number, percentChange: number, volume: number}>;
+  const [numericValues, setNumericValues] = useState<NumericValueMap>({});
   const [showLulzTooltip, setShowLulzTooltip] = useState<string | null>(null);
   
   // Initialize values and start animation effect
   useEffect(() => {
-    const initialValues: {[key: string]: {price: number, percentChange: number, volume: number}} = {};
+    const initialValues: NumericValueMap = {};
     
     memes.forEach(meme => {
       // Start with lower values for animation
@@ -94,6 +95,9 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
           <span>AI-tracked real-time meme data | Sorted by {sortConfig?.key || 'default'} ({sortConfig?.direction || 'neutral'})</span>
           <span>MEME <span className="text-[#ffd75e]">SCANNER</span> 500</span>
         </div>
+        <div className="text-xs text-white mt-0.5">
+          <span>Click any row to view on Reddit</span>
+        </div>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -135,10 +139,30 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
           <tbody>
             {memes.map((meme, index) => {
               const isBigMover = Math.abs(meme.percentChange) > 10;
-              const currentValues = numericValues[meme.id] || meme;
+              
+              // TypeScript warnings can be ignored here as we have proper fallbacks
+              // The warnings are about potential 'undefined' values, but our OR operator ensures we have valid defaults
+              const currentValues = numericValues[meme.id] || { 
+                price: meme.price, 
+                percentChange: meme.percentChange, 
+                volume: meme.volume 
+              };
               
               return (
-                <tr key={meme.id} className={`${index % 2 === 0 ? "bg-[#171717]" : "bg-[#1c1c1c]"} hover:bg-[#13233a]`}>
+                <tr 
+                  key={meme.id} 
+                  className={`${index % 2 === 0 ? "bg-[#171717]" : "bg-[#1c1c1c]"} hover:bg-[#13233a] cursor-pointer`}
+                  onClick={() => {
+                    // Open Reddit post in a new tab
+                    if (meme.link) {
+                      window.open(meme.link, '_blank', 'noopener,noreferrer');
+                    } else {
+                      // If no specific link, open a Reddit search for the meme title
+                      const searchQuery = encodeURIComponent(meme.title);
+                      window.open(`https://www.reddit.com/search/?q=${searchQuery}`, '_blank', 'noopener,noreferrer');
+                    }
+                  }}
+                >
                   <td className="px-2 py-1 border border-[#555555] font-bold text-[#ffd75e]">{meme.ticker}</td>
                   <td className="px-2 py-1 border border-[#555555]">
                     <div className="w-[40px] h-[40px] relative">
@@ -160,12 +184,12 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
                     </div>
                   </td>
                   <td 
-                    className={`px-2 py-1 border border-[#555555] text-right text-white ${isBigMover ? (meme.percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}
+                    className={`px-2 py-1 border border-[#555555] text-right text-white ${isBigMover ? (currentValues.percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}
                     onMouseEnter={() => setShowLulzTooltip(meme.id)}
                     onMouseLeave={() => setShowLulzTooltip(null)}
                   >
                     <div className="relative">
-                      {formatLulzScore(currentValues.price)}
+                      {formatLulzScore(currentValues.price)} <span className="text-xs text-[#6ab6fd]">🔗</span>
                       {showLulzTooltip === meme.id && (
                         <div className="absolute right-0 bottom-full mb-1 bg-[#000] border border-[#555555] p-1 text-xs text-white z-20 w-40">
                           {getLulzTooltip()}
@@ -175,15 +199,15 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
                   </td>
                   <td
                     className={`px-2 py-1 border border-[#555555] text-right ${
-                      meme.percentChange >= 0 ? "text-[#00b04d]" : "text-[#d7282f]"
-                    } ${isBigMover ? (meme.percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}
+                      currentValues.percentChange >= 0 ? "text-[#00b04d]" : "text-[#d7282f]"
+                    } ${isBigMover ? (currentValues.percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}
                   >
                     {formatVibeShift(currentValues.percentChange)}
                   </td>
                   <td className="px-2 py-1 border border-[#555555] text-right">
                     <div className="text-white count-up">{formatNumber(currentValues.volume)}</div>
                     <div className="text-xs text-[#6ab6fd]">
-                      {meme.percentChange >= 0 ? "↑" : "↓"} {formatNumber(Math.abs(Math.floor(currentValues.volume * currentValues.percentChange / 100)))}
+                      {currentValues.percentChange >= 0 ? "↑" : "↓"} {formatNumber(Math.abs(Math.floor(currentValues.volume * currentValues.percentChange / 100)))}
                     </div>
                   </td>
                 </tr>

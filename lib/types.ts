@@ -7,4 +7,5 @@ export interface MemeTicker {
   percentChange: number // Now represents "Vibe Shift %"
   volume: number // Now represents "Impression Count"
   timestamp: number
+  link?: string // Link to the Reddit post
 }
