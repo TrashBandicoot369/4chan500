@@ -6,13 +6,17 @@ A web application for collecting and analyzing meme and trading data.
 
 ```
 .
-├── app/
-│   ├── globals.css               # Global CSS styles
-│   ├── layout.tsx                # Main application layout component
-│   └── page.tsx                  # Main page component
+├── app/                        # Next.js App Router
+│   ├── api/                    # API Routes
+│   │   ├── firebase-test/      # Firebase diagnostics endpoint
+│   │   ├── memes/              # Meme data API endpoint
+│   │   └── sentiment/          # Sentiment analysis API endpoint
+│   ├── globals.css             # Global CSS styles
+│   ├── layout.tsx              # Main application layout component
+│   └── page.tsx                # Main page component
 │
-├── components/
-│   ├── ui/                       # UI component library
+├── components/                 # UI Components
+│   ├── ui/                     # UI component library
 │   │   ├── accordion.tsx
 │   │   ├── alert-dialog.tsx
 │   │   ├── alert.tsx
@@ -60,42 +64,49 @@ A web application for collecting and analyzing meme and trading data.
 │   │   ├── toaster.tsx
 │   │   ├── toggle-group.tsx
 │   │   ├── toggle.tsx
-│   │   ├── tooltip.tsx
-│   │   ├── use-mobile.tsx
-│   │   └── use-toast.ts
-│   ├── header.tsx                # Header component
-│   ├── market-sentiment.tsx      # Market sentiment component
-│   ├── submission-form.tsx       # Form for submissions
-│   ├── theme-provider.tsx        # Theme provider component
-│   ├── ticker-table.tsx          # Table for displaying tickers
-│   └── trending-tickers.tsx      # Trending tickers component
+│   │   └── tooltip.tsx
+│   ├── header.tsx              # Header component
+│   ├── market-sentiment.tsx    # Market sentiment component
+│   ├── submission-form.tsx     # Form for submissions
+│   ├── theme-provider.tsx      # Theme provider component
+│   ├── ticker-table.tsx        # Table for displaying tickers
+│   └── trending-tickers.tsx    # Trending tickers component
 │
-├── hooks/
-│   ├── use-mobile.tsx            # Hook for mobile detection
-│   └── use-toast.ts              # Hook for toast notifications
+├── hooks/                      # React hooks
+│   ├── use-mobile.tsx          # Hook for mobile detection
+│   └── use-toast.ts            # Hook for toast notifications
 │
-├── lib/
-│   ├── data.ts                   # Data utilities
-│   ├── types.ts                  # TypeScript type definitions
-│   └── utils.ts                  # Utility functions
+├── lib/                        # Shared utilities and helpers
+│   ├── data.ts                 # Data utilities
+│   ├── firebase-admin.ts       # Firebase Admin SDK initialization
+│   ├── format-utils.ts         # Formatting utilities
+│   ├── types.ts                # TypeScript type definitions
+│   └── utils.ts                # General utility functions
 │
-├── public/                       # Public assets
+├── public/                     # Public assets
+│   ├── assets/
+│   │   └── memes/              # Meme image assets
+│   └── ...
 │
-├── styles/                       # Additional styles
+├── scripts/                    # Utility scripts
+│   └── format-firebase-key.js  # Script to format Firebase credentials
 │
+├── styles/                     # Additional styles
+│   ├── animations.css          # Animation styles
+│   └── globals.css             # Global styles
+│
+├── .env.local                  # Local environment variables (generated)
 ├── chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json  # Firebase service account key
-├── components.json               # Component configuration
-├── debug_kym_page.html           # Debug HTML for KYM scraper
-├── firebase_admin_setup.py       # Firebase Admin SDK setup
-├── kym_debug.html                # Debug HTML for KYM scraper
-├── kym_scraper.py                # Know Your Meme scraper script
-├── next.config.mjs               # Next.js configuration
-├── package.json                  # NPM package configuration
-├── pnpm-lock.yaml                # PNPM lock file
-├── postcss.config.mjs            # PostCSS configuration
-├── tailwind.config.ts            # Tailwind CSS configuration
-├── trending_memes.json           # JSON output from the KYM scraper
-└── tsconfig.json                 # TypeScript configuration
+├── components.json             # Component configuration
+├── firebase_admin_setup.py     # Firebase Admin SDK setup for Python
+├── next.config.mjs             # Next.js configuration
+├── package.json                # NPM package configuration
+├── pnpm-lock.yaml              # PNPM lock file
+├── postcss.config.mjs          # PostCSS configuration
+├── reddit_scraper.py           # Reddit scraper script
+├── tailwind.config.ts          # Tailwind CSS configuration
+├── trending_memes.json         # JSON output from scrapers
+└── tsconfig.json               # TypeScript configuration
 ```
 
 ## The First Meta-Memecoin
