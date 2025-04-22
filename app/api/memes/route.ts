@@ -1,46 +1,16 @@
 // app/api/memes/route.ts
 
 import { NextResponse } from "next/server"
-import { getFirestore, DocumentData } from "firebase-admin/firestore"
-import { initializeApp, cert, getApps } from "firebase-admin/app"
-
-// Initialize Firebase with environment variables or local file
-if (!getApps().length) {
-  try {
-    // First try to use environment variables if available (for production)
-    if (process.env.FIREBASE_PROJECT_ID && 
-        process.env.FIREBASE_PRIVATE_KEY && 
-        process.env.FIREBASE_CLIENT_EMAIL) {
-      initializeApp({
-        credential: cert({
-          projectId: process.env.FIREBASE_PROJECT_ID,
-          privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        }),
-      })
-    } else {
-      // In development, fallback to local credentials file
-      try {
-        const { readFileSync } = require('fs')
-        const path = require('path')
-        const serviceAccountPath = path.join(process.cwd(), "chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json")
-        const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, "utf8"))
-        initializeApp({ credential: cert(serviceAccount) })
-        console.log("Using local credentials file for Firebase")
-      } catch (error) {
-        console.warn("Local credentials file not found, using mock data")
-      }
-    }
-  } catch (error) {
-    console.error("Firebase initialization error:", error)
-  }
-}
+import { DocumentData } from "firebase-admin/firestore"
+import { getFirestoreInstance } from "@/lib/firebase-admin"
 
 export async function GET() {
   try {
-    // Check if Firebase is initialized
-    if (getApps().length) {
-      const db = getFirestore()
+    // Get Firestore instance
+    const db = getFirestoreInstance()
+    
+    // If Firestore is available, get data
+    if (db) {
       const snapshot = await db.collection("memes").get()
       
       // Transform Firestore data to expected format with proper data types
@@ -64,12 +34,14 @@ export async function GET() {
       });
       
       return NextResponse.json(memes);
-    } else {
-      // Return mock data if Firebase isn't initialized
+    } 
+    // Fallback for when Firebase isn't initialized
+    else {
+      console.warn("Firebase not initialized in memes API route");
       return NextResponse.json([{
         id: "sample-meme",
         ticker: "SAMPLE",
-        title: "Sample Meme",
+        title: "Sample Meme (Firebase not configured)",
         imageUrl: "https://i.kym-cdn.com/photos/images/newsfeed/002/652/454/c69.jpg",
         price: 3.50,
         percentChange: 2.5,
@@ -81,7 +53,10 @@ export async function GET() {
   } catch (error) {
     console.error("Error fetching memes:", error)
     return NextResponse.json(
-      { error: "Failed to fetch memes data" },
+      { 
+        error: "Failed to fetch memes data",
+        message: error instanceof Error ? error.message : "Unknown error" 
+      },
       { status: 500 }
     )
   }

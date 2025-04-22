@@ -130,27 +130,33 @@ npm run dev
 
 3. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## Firebase Setup
-
-Firebase connection is set up using the `firebase_admin_setup.py` script, which needs the service account JSON file to authenticate with Firebase.
-
 ## Deploying to Vercel
 
 ### Firebase Configuration for Vercel
 
-The project is configured to work both locally and on Vercel. For Vercel deployment, you'll need to set the following environment variables:
+The project is configured to work both locally and on Vercel. For Vercel deployment, you need to set up Firebase environment variables:
 
-1. Go to your Vercel project settings
-2. Navigate to the "Environment Variables" section
-3. Add the following variables:
+1. Run the helper script to generate properly formatted environment variables:
+   ```
+   node scripts/format-firebase-key.js
+   ```
 
-```
-FIREBASE_PROJECT_ID=chan500
-FIREBASE_CLIENT_EMAIL=firebase-adminsdk-fbsvc@chan500.iam.gserviceaccount.com
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour Private Key Here\n-----END PRIVATE KEY-----\n"
-```
+2. Go to your Vercel project settings
+3. Navigate to the "Environment Variables" section
+4. Add the following variables exactly as shown by the script output:
+   - `FIREBASE_PROJECT_ID`
+   - `FIREBASE_CLIENT_EMAIL`
+   - `FIREBASE_PRIVATE_KEY` - **IMPORTANT**: Include the double quotes around the value!
 
-The private key should be copied from your Firebase service account JSON file, with newlines properly escaped as `\n`.
+5. After adding the environment variables, redeploy your application from the Vercel dashboard or push a new commit.
+
+### Troubleshooting Vercel Deployment
+
+If your application shows "Firebase not configured" on Vercel:
+
+1. Check that all three environment variables are set correctly
+2. Verify that the private key includes escaped newlines (`\n`) and is wrapped in quotes
+3. Redeploy the application after making changes to environment variables
 
 ### Local Development
 
