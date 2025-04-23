@@ -1,18 +1,19 @@
 import os
 import json
+import base64
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-# Load Firebase credentials from environment variable
-firebase_config = os.getenv('FIREBASE_CONFIG')
+# Load Base64-encoded Firebase config
+firebase_config_b64 = os.getenv('FIREBASE_CONFIG')
 
-if not firebase_config:
+if not firebase_config_b64:
     raise ValueError("FIREBASE_CONFIG environment variable is not set")
 
-# 📢 Add this on **Line 10**
-print(f"DEBUG: First 200 chars of FIREBASE_CONFIG: {firebase_config[:200]}")
+# Decode from Base64 back to JSON string
+firebase_config_json = base64.b64decode(firebase_config_b64).decode('utf-8')
 
-cred = credentials.Certificate(json.loads(firebase_config))
+cred = credentials.Certificate(json.loads(firebase_config_json))
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
