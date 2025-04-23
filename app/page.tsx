@@ -2,11 +2,25 @@
 
 import { useState, useEffect } from "react"
 import { Header } from "@/components/header"
-import { MemeSignalTable, MemeSignalTableWithData } from "@/components/ticker-table"
+import { MemeSignalTable } from "@/components/ticker-table"
+import dynamic from "next/dynamic"
 import { TrendingMemeSignals } from "@/components/trending-tickers"
 import MarketSentiment from "@/components/market-sentiment"
 // import { initialMemes } from "@/lib/data"
 import type { MemeTicker } from "@/lib/types"
+
+// Dynamically import the data component to ensure client-side only execution
+const MemeSignalTableWithData = dynamic(
+  () => import("@/components/MemeSignalTableWithData"),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="border border-[#555555] mb-2 bg-[#171717] p-4 text-center text-[#ffd75e]">
+        <div className="animate-pulse">Loading MEME SCANNER data...</div>
+      </div>
+    )
+  }
+)
 
 export default function Home() {
   // Use state for terminal alerts and trending memes
@@ -59,12 +73,17 @@ export default function Home() {
 
   // Fetch trending memes for the trending section
   useEffect(() => {
+    // Only run on client-side
+    if (typeof window === 'undefined') return;
+    
     fetch("/api/memes")
       .then((res) => res.json())
       .then((data) => {
-        // Sort by volume and take top 5
-        const trending = [...data].sort((a, b) => b.volume - a.volume).slice(0, 5)
-        setTrendingMemes(trending)
+        if (Array.isArray(data)) {
+          // Sort by volume and take top 5
+          const trending = [...data].sort((a, b) => b.volume - a.volume).slice(0, 5)
+          setTrendingMemes(trending)
+        }
       })
       .catch((err) => console.error("Failed to fetch trending memes", err))
   }, [])
@@ -75,7 +94,7 @@ export default function Home() {
         <Header />
         <MarketSentiment />
         <TrendingMemeSignals trendingMemes={trendingMemes} />
-        {/* Replace static MemeSignalTable with the MemeSignalTableWithData component */}
+        {/* Use the dynamically imported MemeSignalTableWithData */}
         <MemeSignalTableWithData />
       </div>
       
