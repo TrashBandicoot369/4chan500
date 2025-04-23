@@ -1,6 +1,15 @@
+<!-- Deployment trigger: 2024-04-23 -->
+
 # 4CHAN500: The AI-Powered Meme Index Fund
 
 A web application for collecting and analyzing meme and trading data.
+
+## Features
+
+- AI analysis of current and trending memes from Reddit, 4chan, and other sources
+- Meme "stock prices" that reflect virality and engagement metrics
+- Real-time updates on trending meme formats
+- Curated meme feed with signal strength indicators
 
 ## Project Structure
 
