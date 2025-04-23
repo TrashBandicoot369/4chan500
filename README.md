@@ -117,26 +117,56 @@ The project uses Firebase Admin SDK for backend services. The setup is in `fireb
 
 ## Scripts
 
-- `kym_scraper.py` - A Python script to scrape trending memes from Know Your Meme website.
+- `reddit_scraper.py` - A Python script to scrape Reddit for trending memes and sentiment data
+- `format-firebase-key.js` - A JavaScript tool to format Firebase credentials for Vercel deployment
 
 ## Technology Stack
 
-- Next.js - React framework
-- TypeScript - Type-safe JavaScript
-- Tailwind CSS - Utility-first CSS framework
-- Firebase - Backend and database services
-- Python - For scraping and backend scripts
+### Frontend
+- **Next.js 15** - React framework with App Router architecture
+- **React 19** - UI library
+- **TypeScript** - Typed JavaScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **Shadcn UI** - Component library based on Radix UI and Tailwind
+- **Radix UI** - Unstyled, accessible UI components
+- **Framer Motion** - Animation library
+- **date-fns** - Date utility library
+- **React Hook Form** - Form validation library
+
+### Backend
+- **Next.js API Routes** - Serverless functions
+- **Firebase Admin SDK** - Server-side Firebase access
+- **Firestore** - NoSQL document database
+
+### Data Processing
+- **Python** - Scripting language for data collection
+- **Reddit API (PRAW)** - Data source for trending memes
+- **Requests** - HTTP client for Python
+- **Beautiful Soup** - HTML parsing library
+- **OpenAI API** - AI-powered sentiment analysis
+
+### Deployment & Infrastructure
+- **Vercel** - Hosting and deployment platform
+- **Environment Variables** - Configuration management
+- **GitHub** - Version control
+
+### Tools & Utilities
+- **pnpm** - Fast, disk space efficient package manager
+- **ESLint** - JavaScript linter
+- **PostCSS** - CSS transformation tool
+- **Autoprefixer** - CSS vendor prefixing
+- **TensorFlow.js** - Machine learning for the browser (planned)
 
 ## Getting Started
 
 1. Install dependencies:
 ```
-npm install
+pnpm install
 ```
 
 2. Run the development server:
 ```
-npm run dev
+pnpm dev
 ```
 
 3. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
@@ -197,4 +227,4 @@ If your application shows "Firebase not configured" on Vercel:
 
 For local development, you can use the Firebase service account JSON file directly. The app is configured to look for `chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json` in the project root.
 
-Alternatively, you can create a `.env.local` file with the same environment variables as above for local development. 
+Alternatively, you can create a `.env.local` file with the same environment variables as above for local development.
