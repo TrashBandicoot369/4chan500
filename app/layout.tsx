@@ -1,11 +1,12 @@
+"use client"
+
 import "./globals.css"
 import "../styles/animations.css"
 import type { Metadata } from "next"
 import dynamic from "next/dynamic"
+import { useState, useEffect } from "react"
 
-// Dynamically import the HydrationDebugger to ensure it only runs on client
-const HydrationDebugger = dynamic(() => import("@/components/HydrationDebugger"), { ssr: false })
-
+// Need to define metadata outside the client component
 export const metadata: Metadata = {
   title: "4CHAN500 - Meme Signal Scanner",
   description: "AI-powered meme trend analysis and tracking",
@@ -20,6 +21,23 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const [isClient, setIsClient] = useState(false)
+  
+  // Dynamically import the HydrationDebugger to ensure it only runs on client
+  const HydrationDebugger = dynamic(() => import("@/components/HydrationDebugger"), {
+    loading: () => <>{children}</>
+  })
+  
+  useEffect(() => {
+    setIsClient(true)
+    
+    // Update timestamp when component mounts
+    const timestampEl = document.getElementById('last-updated-time')
+    if (timestampEl) {
+      timestampEl.innerText = new Date().toLocaleString()
+    }
+  }, [])
+  
   return (
     <html lang="en">
       <body className="min-h-screen text-sm" suppressHydrationWarning>
@@ -35,7 +53,7 @@ export default function RootLayout({
               <a href="https://youtu.be/ejC4L1DjL9g" target="_blank" className="px-2 py-0.5 bg-[#13233a] text-[#ffd75e] border border-[#555555]">Export</a>
             </div>
           </div>
-          {process.env.NODE_ENV === "development" ? (
+          {process.env.NODE_ENV === "development" && isClient ? (
             <HydrationDebugger>{children}</HydrationDebugger>
           ) : (
             children
@@ -44,15 +62,6 @@ export default function RootLayout({
             <div>Last Updated: <span id="last-updated-time">Loading...</span></div>
             <div>F1:Help | F2:Menu | F3:Charts | F4:Index</div>
           </div>
-          
-          {/* Client-side script to update the timestamp after hydration */}
-          <script dangerouslySetInnerHTML={{
-            __html: `
-            document.addEventListener('DOMContentLoaded', function() {
-              document.getElementById('last-updated-time').innerText = new Date().toLocaleString();
-            });
-            `
-          }} />
         </div>
       </body>
     </html>
