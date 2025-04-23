@@ -1,9 +1,6 @@
-"use client"
-
 import "./globals.css"
 import "../styles/animations.css"
 import type { Metadata } from "next"
-import { useState, useEffect } from "react"
 
 // Need to define metadata outside the client component
 export const metadata: Metadata = {
@@ -20,39 +17,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [isClient, setIsClient] = useState(false)
-  const [hydrationError, setHydrationError] = useState<string | null>(null)
-  
-  // Handle hydration error detection
-  useEffect(() => {
-    setIsClient(true)
-    
-    // Only enable error tracking in development mode
-    if (process.env.NODE_ENV === "development") {
-      // Listen for React hydration errors
-      const originalConsoleError = console.error
-      
-      console.error = (...args) => {
-        // Check if this is a hydration error
-        const errorString = args.join(' ')
-        if (errorString.includes('hydrat') || errorString.includes('mismatched')) {
-          setHydrationError(errorString)
-        }
-        originalConsoleError(...args)
-      }
-      
-      return () => {
-        console.error = originalConsoleError
-      }
-    }
-    
-    // Update timestamp when component mounts
-    const timestampEl = document.getElementById('last-updated-time')
-    if (timestampEl) {
-      timestampEl.innerText = new Date().toLocaleString()
-    }
-  }, [])
-  
   return (
     <html lang="en">
       <body className="min-h-screen text-sm" suppressHydrationWarning>
@@ -72,35 +36,20 @@ export default function RootLayout({
           {/* Main content */}
           {children}
           
-          {/* Footer */}
+          {/* Footer with updated timestamp text */}
           <div className="p-1 bg-[#13233a] text-white text-xs border-t border-[#555555] flex justify-between">
-            <div>Last Updated: <span id="last-updated-time">Loading...</span></div>
+            <div>Last Updated: <span id="timestamp">Static Time</span></div>
             <div>F1:Help | F2:Menu | F3:Charts | F4:Index</div>
           </div>
           
-          {/* Hydration error display - only visible in development mode */}
-          {process.env.NODE_ENV === "development" && hydrationError && (
-            <div style={{
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              padding: '10px',
-              background: '#ffcccc',
-              color: 'black',
-              zIndex: 9999,
-              fontSize: '14px',
-              boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
-              maxHeight: '30vh',
-              overflow: 'auto'
-            }}>
-              <h3>Hydration Error Detected!</h3>
-              <p style={{ whiteSpace: 'pre-wrap' }}>{hydrationError}</p>
-              <p>
-                <strong>Client Hydrated:</strong> {isClient ? 'Yes' : 'No'}
-              </p>
-            </div>
-          )}
+          {/* Simple script to update timestamp */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                document.getElementById('timestamp').innerText = new Date().toLocaleString();
+              `,
+            }}
+          />
         </div>
       </body>
     </html>
