@@ -4,7 +4,11 @@ import { useState, useEffect } from "react"
 import { MemeSignalTable } from "./ticker-table"
 import type { MemeTicker } from "@/lib/types"
 
-export default function MemeSignalTableWithData() {
+interface MemeSignalTableWithDataProps {
+  externalMemes?: MemeTicker[]
+}
+
+export default function MemeSignalTableWithData({ externalMemes }: MemeSignalTableWithDataProps = {}) {
   const [memes, setMemes] = useState<MemeTicker[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -23,7 +27,22 @@ export default function MemeSignalTableWithData() {
   }, [])
 
   useEffect(() => {
-    // Only fetch data on the client side
+    // If we have external memes, use those instead of fetching
+    if (externalMemes && externalMemes.length > 0) {
+      // Apply default sorting to the external memes
+      const sortedData = [...externalMemes].sort((a, b) => {
+        const aValue = a.price || 0;
+        const bValue = b.price || 0;
+        if (aValue < bValue) return 1;
+        if (aValue > bValue) return -1;
+        return 0;
+      });
+      setMemes(sortedData);
+      setLoading(false);
+      return;
+    }
+
+    // Only fetch data on the client side and if no external memes provided
     if (!isClient) return
     
     const controller = new AbortController()
@@ -39,7 +58,15 @@ export default function MemeSignalTableWithData() {
       })
       .then((data: MemeTicker[]) => {
         if (Array.isArray(data)) {
-          setMemes(data)
+          // Sort by price (LULZ SCORE) in descending order by default
+          const sortedData = [...data].sort((a, b) => {
+            const aValue = a.price || 0;
+            const bValue = b.price || 0;
+            if (aValue < bValue) return 1;
+            if (aValue > bValue) return -1;
+            return 0;
+          });
+          setMemes(sortedData)
           setError(null)
         } else {
           console.error("Invalid API response format:", data)
@@ -59,7 +86,7 @@ export default function MemeSignalTableWithData() {
     return () => {
       controller.abort()
     }
-  }, [isClient]) // Only re-run when isClient changes (once)
+  }, [isClient, externalMemes]) // Re-run when isClient or externalMemes changes
 
   const handleSort = (key: keyof MemeTicker) => {
     let direction: "ascending" | "descending" = "descending"
@@ -71,9 +98,11 @@ export default function MemeSignalTableWithData() {
     setSortConfig({ key, direction })
     
     const sortedMemes = [...memes].sort((a, b) => {
-      if (a[key] < b[key]) return direction === "ascending" ? -1 : 1
-      if (a[key] > b[key]) return direction === "ascending" ? 1 : -1
-      return 0
+      const aValue = a[key] || 0;
+      const bValue = b[key] || 0;
+      if (aValue < bValue) return direction === "ascending" ? -1 : 1;
+      if (aValue > bValue) return direction === "ascending" ? 1 : -1;
+      return 0;
     })
     
     setMemes(sortedMemes)
@@ -115,7 +144,15 @@ export default function MemeSignalTableWithData() {
                   })
                   .then((data: MemeTicker[]) => {
                     if (Array.isArray(data)) {
-                      setMemes(data)
+                      // Apply default sorting by price (LULZ SCORE) in descending order
+                      const sortedData = [...data].sort((a, b) => {
+                        const aValue = a.price || 0;
+                        const bValue = b.price || 0;
+                        if (aValue < bValue) return 1;
+                        if (aValue > bValue) return -1;
+                        return 0;
+                      });
+                      setMemes(sortedData)
                     } else {
                       throw new Error("Invalid data format received from API")
                     }
