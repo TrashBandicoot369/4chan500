@@ -91,26 +91,26 @@ export default function MarketSentiment() {
           
           <div className="grid grid-cols-3 gap-3 mt-4 text-xs">
             <div className="bg-[#111a25] p-2 rounded border border-[#2a3744]">
-              <div className="text-[#6ab6fd] font-semibold mb-1">MEME VELOCITY</div>
-              <div className="text-white">💹 Trending</div>
+              <div className="text-[#6ab6fd] font-semibold mb-1">MEME STONKS</div>
+              <div className="text-white">🚀 To The Moon</div>
             </div>
             <div className="bg-[#111a25] p-2 rounded border border-[#2a3744]">
-              <div className="text-[#6ab6fd] font-semibold mb-1">MARKET CAP</div>
+              <div className="text-[#6ab6fd] font-semibold mb-1">BRAIN DAMAGE</div>
               <div className="text-white">
                 {marketDataLoading ? (
                   <span className="animate-pulse">Loading...</span>
                 ) : (
-                  marketData ? formatMarketCap(marketData.marketCap) : "Data unavailable"
+                  marketData ? formatMarketCap(marketData.marketCap) : "My last brain cell left the chat"
                 )}
               </div>
             </div>
             <div className="bg-[#111a25] p-2 rounded border border-[#2a3744]">
-              <div className="text-[#6ab6fd] font-semibold mb-1">24H VOLUME</div>
+              <div className="text-[#6ab6fd] font-semibold mb-1">CHAD FACTOR</div>
               <div className="text-white">
                 {marketDataLoading ? (
                   <span className="animate-pulse">Loading...</span>
                 ) : (
-                  marketData ? `$${formatNumber(marketData.volume24h)}` : "Data unavailable"
+                  marketData ? `💪 ${formatNumber(marketData.volume24h)}` : "Over 9000!!1!"
                 )}
               </div>
             </div>
