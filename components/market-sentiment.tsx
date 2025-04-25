@@ -1,11 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { fetchDexData, formatMarketCap, formatNumber } from "@/lib/utils"
 
 export default function MarketSentiment() {
   const [summary, setSummary] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [lastUpdated, setLastUpdated] = useState<string | null>(null)
+  const [marketData, setMarketData] = useState<{ marketCap: number; volume24h: number } | null>(null)
+  const [marketDataLoading, setMarketDataLoading] = useState(true)
+
+  // Define token contract address - in production this would be an ENV variable
+  const TOKEN_CONTRACT_ADDRESS = "0xd3f1A58DDADb9a33103FBc1B6C1D89E221F0A0BD" // Example address, replace with actual token address
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -23,6 +29,28 @@ export default function MarketSentiment() {
     }
 
     fetchSummary()
+  }, [])
+
+  // Fetch DEX data from Dexscreener
+  useEffect(() => {
+    const getDexData = async () => {
+      setMarketDataLoading(true)
+      try {
+        const data = await fetchDexData(TOKEN_CONTRACT_ADDRESS)
+        setMarketData(data)
+      } catch (error) {
+        console.error("Error fetching DEX data:", error)
+      } finally {
+        setMarketDataLoading(false)
+      }
+    }
+
+    getDexData()
+    
+    // Refresh every 5 minutes
+    const intervalId = setInterval(getDexData, 5 * 60 * 1000)
+    
+    return () => clearInterval(intervalId)
   }, [])
 
   // Format the timestamp nicely
@@ -67,17 +95,25 @@ export default function MarketSentiment() {
               <div className="text-white">💹 Trending</div>
             </div>
             <div className="bg-[#111a25] p-2 rounded border border-[#2a3744]">
-              <div className="text-[#6ab6fd] font-semibold mb-1">FORMAT DIVERSITY</div>
-              <div className="text-white">📊 Medium</div>
+              <div className="text-[#6ab6fd] font-semibold mb-1">MARKET CAP</div>
+              <div className="text-white">
+                {marketDataLoading ? (
+                  <span className="animate-pulse">Loading...</span>
+                ) : (
+                  marketData ? formatMarketCap(marketData.marketCap) : "Data unavailable"
+                )}
+              </div>
             </div>
             <div className="bg-[#111a25] p-2 rounded border border-[#2a3744]">
-              <div className="text-[#6ab6fd] font-semibold mb-1">MARKET SIGNAL</div>
-              <div className="text-white">🔮 Watching</div>
+              <div className="text-[#6ab6fd] font-semibold mb-1">24H VOLUME</div>
+              <div className="text-white">
+                {marketDataLoading ? (
+                  <span className="animate-pulse">Loading...</span>
+                ) : (
+                  marketData ? `$${formatNumber(marketData.volume24h)}` : "Data unavailable"
+                )}
+              </div>
             </div>
-          </div>
-          
-          <div className="mt-3 text-xs text-[#aaa] italic border-t border-[#333] pt-2">
-            Powered by AI market analysis. Data may be delayed.
           </div>
         </div>
       )}
