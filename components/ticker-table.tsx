@@ -46,17 +46,17 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
   }
 
   return (
-    <div className="border border-[#555555] mb-2 bg-[#171717] relative">
+    <section className="border border-[#555555] mb-4 bg-[#171717] relative">
       {/* Add static noise overlay */}
       <div className="static-noise opacity-[0.02]"></div>
       
-      <div className="border-b border-[#555555] bg-[#13233a] px-2 py-1">
-        <h2 className="font-bold text-[#ffd75e]">TOP MEME SIGNAL THREADS</h2>
-        <div className="text-xs text-[#6ab6fd] mt-0.5 flex justify-between">
+      <div className="border-b border-[#555555] bg-[#13233a] px-4 py-2">
+        <h2 className="font-bold text-[#ffd75e]">TOP TRENDING MEMES</h2>
+        <div className="text-xs text-[#6ab6fd] mt-1 flex justify-between">
           <span>AI-tracked real-time meme data | Sorted by {sortConfig?.key || 'default'} ({sortConfig?.direction || 'neutral'})</span>
           <span>MEME <span className="text-[#ffd75e]">SCANNER</span> 500</span>
         </div>
-        <div className="text-xs text-white mt-0.5">
+        <div className="text-xs text-white mt-1">
           <span>Click any row to view on Reddit</span>
         </div>
       </div>
@@ -64,17 +64,17 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
         <table className="w-full">
           <thead>
             <tr className="bg-[#13233a] text-[#ffd75e]">
-              <th className="px-2 py-1 text-left border border-[#555555] cursor-pointer" onClick={() => onSort("ticker")}>
+              <th className="px-4 py-2 text-left border border-[#555555] cursor-pointer" onClick={() => onSort("ticker")}>
                 SIGNAL ID{getSortIndicator("ticker")}
               </th>
-              <th className="px-2 py-1 text-left border border-[#555555]">
+              <th className="px-4 py-2 text-left border border-[#555555]">
                 IMG
               </th>
-              <th className="px-2 py-1 text-left border border-[#555555]">
+              <th className="px-4 py-2 text-left border border-[#555555]">
                 MEME ID
               </th>
               <th 
-                className="px-2 py-1 text-right border border-[#555555] cursor-pointer relative" 
+                className="px-4 py-2 text-right border border-[#555555] cursor-pointer relative" 
                 onClick={() => onSort("price")}
                 onMouseEnter={() => setShowLulzTooltip("header")}
                 onMouseLeave={() => setShowLulzTooltip(null)}
@@ -84,18 +84,18 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
                   <span className="text-xs ml-1 text-[#ffd75e]">↕</span>
                 </div>
                 {showLulzTooltip === "header" && (
-                  <div className="absolute right-0 top-full mt-1 bg-[#000] border border-[#555555] p-1 text-xs text-white z-20 w-40">
+                  <div className="absolute right-0 top-full mt-1 bg-[#000] border border-[#555555] p-2 text-xs text-white z-20 w-40">
                     {getLulzTooltip()}
                   </div>
                 )}
               </th>
               <th
-                className="px-2 py-1 text-right border border-[#555555] cursor-pointer"
+                className="px-4 py-2 text-right border border-[#555555] cursor-pointer"
                 onClick={() => onSort("percentChange")}
               >
                 VIBE SHIFT %{getSortIndicator("percentChange")}
               </th>
-              <th className="px-2 py-1 text-right border border-[#555555] cursor-pointer" onClick={() => onSort("volume")}>
+              <th className="px-4 py-2 text-right border border-[#555555] cursor-pointer" onClick={() => onSort("volume")}>
                 IMPRESSIONS{getSortIndicator("volume")}
               </th>
             </tr>
@@ -121,7 +121,7 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
               return (
                 <tr 
                   key={safeMemeTicker.id} 
-                  className={`${index % 2 === 0 ? "bg-[#171717]" : "bg-[#1c1c1c]"} hover:bg-[#13233a] cursor-pointer`}
+                  className={`${index % 2 === 0 ? "bg-[#171717]" : "bg-[#1c1c1c]"} hover:bg-[#13233a] cursor-pointer transition-colors`}
                   onClick={() => {
                     // Open Reddit post in a new tab
                     if (safeMemeTicker.link) {
@@ -133,8 +133,8 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
                     }
                   }}
                 >
-                  <td className="px-2 py-1 border border-[#555555] font-bold text-[#ffd75e]">{safeMemeTicker.ticker}</td>
-                  <td className="px-2 py-1 border border-[#555555]">
+                  <td className="px-4 py-2 border border-[#555555] font-bold text-[#ffd75e]">{safeMemeTicker.ticker}</td>
+                  <td className="px-4 py-2 border border-[#555555]">
                     <div className="w-[40px] h-[40px] relative">
                       <Image
                         src={safeMemeTicker.imageUrl}
@@ -142,11 +142,10 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
                         fill
                         sizes="40px"
                         className="object-cover border border-[#555555]"
-                        style={{ objectFit: "cover" }}
                       />
                     </div>
                   </td>
-                  <td className="px-2 py-1 border border-[#555555]">
+                  <td className="px-4 py-2 border border-[#555555]">
                     <div className="text-[#6ab6fd]">{safeMemeTicker.title}</div>
                     <div className="text-xs text-[#ffd75e]">
                       Meme Heat: <span className="text-white">#{index + 1}</span>
@@ -154,7 +153,7 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
                     </div>
                   </td>
                   <td 
-                    className={`px-2 py-1 border border-[#555555] text-right text-white ${isBigMover ? (percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}
+                    className={`px-4 py-2 border border-[#555555] text-right text-white ${isBigMover ? (percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}
                     onMouseEnter={() => setShowLulzTooltip(safeMemeTicker.id)}
                     onMouseLeave={() => setShowLulzTooltip(null)}
                   >
@@ -177,20 +176,20 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
                         🔗
                       </span>
                       {showLulzTooltip === safeMemeTicker.id && (
-                        <div className="absolute right-0 bottom-full mb-1 bg-[#000] border border-[#555555] p-1 text-xs text-white z-20 w-40">
+                        <div className="absolute right-0 bottom-full mb-1 bg-[#000] border border-[#555555] p-2 text-xs text-white z-20 w-40">
                           {getLulzTooltip()}
                         </div>
                       )}
                     </div>
                   </td>
                   <td
-                    className={`px-2 py-1 border border-[#555555] text-right ${
+                    className={`px-4 py-2 border border-[#555555] text-right ${
                       percentChange >= 0 ? "text-[#00b04d]" : "text-[#d7282f]"
                     } ${isBigMover ? (percentChange >= 0 ? "flash-green" : "flash-red") : ""}`}
                   >
                     {formatVibeShift(percentChange)}
                   </td>
-                  <td className="px-2 py-1 border border-[#555555] text-right">
+                  <td className="px-4 py-2 border border-[#555555] text-right">
                     <div className="text-white count-up">{formatNumber(safeMemeTicker.volume)}</div>
                     <div className="text-xs text-[#6ab6fd]">
                       {percentChange >= 0 ? "↑" : "↓"} {formatNumber(Math.abs(Math.floor(safeMemeTicker.volume * percentChange / 100)))}
@@ -202,9 +201,9 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
           </tbody>
         </table>
       </div>
-      <div className="px-2 py-1 text-xs text-[#6ab6fd] border-t border-[#555555]">
+      <div className="px-4 py-2 text-xs text-[#6ab6fd] border-t border-[#555555]">
         <p>Last update: {lastUpdated} | AI-generated metrics | MEME <span className="text-[#ffd75e]">Trend Analysis</span></p>
       </div>
-    </div>
+    </section>
   )
 }
