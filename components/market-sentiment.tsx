@@ -9,9 +9,23 @@ export default function MarketSentiment() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null)
   const [marketData, setMarketData] = useState<{ marketCap: number; volume24h: number } | null>(null)
   const [marketDataLoading, setMarketDataLoading] = useState(true)
+  const [copied, setCopied] = useState(false)
 
   // Define token contract address - in production this would be an ENV variable
   const TOKEN_CONTRACT_ADDRESS = "0xd3f1A58DDADb9a33103FBc1B6C1D89E221F0A0BD" // Example address, replace with actual token address
+  
+  // Contact address that needs to be copyable
+  const CONTACT_ADDRESS = "G3tJRu9dEiX1qoYmUfQP5cSzKMLaXCrjdPyEuerbpump"
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(CONTACT_ADDRESS)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error("Failed to copy address", err)
+    }
+  }
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -89,7 +103,7 @@ export default function MarketSentiment() {
             {summary || "No sentiment data available."}
           </p>
           
-          <div className="grid grid-cols-3 gap-3 mt-4 text-xs">
+          <div className="grid grid-cols-4 gap-3 mt-4 text-xs">
             <div className="bg-[#111a25] p-2 rounded border border-[#2a3744]">
               <div className="text-[#6ab6fd] font-semibold mb-1">MEME STONKS</div>
               <div className="text-white">🚀 To The Moon</div>
@@ -112,6 +126,16 @@ export default function MarketSentiment() {
                 ) : (
                   marketData ? `💪 ${formatNumber(marketData.volume24h)}` : "Over 9000!!1!"
                 )}
+              </div>
+            </div>
+            <div 
+              className="bg-[#111a25] p-2 rounded border border-[#2a3744] cursor-pointer hover:bg-[#172334] transition-colors"
+              onClick={copyToClipboard}
+            >
+              <div className="text-[#6ab6fd] font-semibold mb-1">CONTACT ADDRESS</div>
+              <div className="text-white flex items-center justify-between">
+                <span className="truncate pr-1">{CONTACT_ADDRESS}</span>
+                <span>{copied ? "✓" : "📋"}</span>
               </div>
             </div>
           </div>
