@@ -53,7 +53,7 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
       <div className="border-b border-[#555555] bg-[#13233a] px-4 py-2">
         <h2 className="font-bold text-[#ffd75e]">TOP TRENDING MEMES</h2>
         <div className="text-xs text-[#6ab6fd] mt-1 flex justify-between">
-          <span>AI-tracked real-time meme data | Sorted by {sortConfig?.key || 'default'} ({sortConfig?.direction || 'neutral'})</span>
+          <span>AI-tracked real-time meme data | Sorted by LULZ</span>
           <span>MEME <span className="text-[#ffd75e]">SCANNER</span> 500</span>
         </div>
         <div className="text-xs text-white mt-1">
@@ -101,7 +101,7 @@ export function MemeSignalTable({ memes, onSort, sortConfig }: MemeSignalTablePr
             </tr>
           </thead>
           <tbody>
-            {memes.map((meme, index) => {
+            {memes.slice(0, 50).map((meme, index) => {
               // Ensure all values are defined
               const safeMemeTicker: MemeTicker = {
                 id: meme.id || `meme-${index}`,

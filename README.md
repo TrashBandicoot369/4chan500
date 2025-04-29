@@ -2,238 +2,207 @@
 
 # 4CHAN500: The AI-Powered Meme Index Fund
 
-A web application for collecting and analyzing meme and trading data.
+A web application for collecting and analyzing meme and trading data, providing real-time insights into meme market trends and virality.
 
-## Features
+## 🌟 Features
 
-- AI analysis of current and trending memes from Reddit, 4chan, and other sources
-- Meme "stock prices" that reflect virality and engagement metrics
-- Real-time updates on trending meme formats
-- Curated meme feed with signal strength indicators
+- **AI-Powered Analysis**
+  - Real-time sentiment analysis of trending memes
+  - Virality forecasting using engagement metrics
+  - Market sentiment summaries and predictions
 
-## Project Structure
+- **Meme Market Metrics**
+  - LULZ Score: Overall meme performance metric
+  - Vibe Shift: Sentiment change indicator
+  - Forecast Score: Early virality potential
+  - Real-time price updates based on engagement
+
+- **Data Sources**
+  - Reddit r/memes integration
+  - 4chan board monitoring
+  - Social media trend tracking
+  - User submissions
+
+- **User Interface**
+  - Real-time meme feed
+  - Market sentiment dashboard
+  - Trending tickers display (ticker table limited to 50 entries for performance)
+  - Mobile-responsive design
+
+## 🏗️ Project Structure
 
 ```
 .
 ├── app/                        # Next.js App Router
 │   ├── api/                    # API Routes
-│   │   ├── firebase-test/      # Firebase diagnostics endpoint
-│   │   ├── memes/              # Meme data API endpoint
-│   │   └── sentiment/          # Sentiment analysis API endpoint
-│   ├── globals.css             # Global CSS styles
-│   ├── layout.tsx              # Main application layout component
-│   └── page.tsx                # Main page component
+│   │   ├── firebase-test/      # Firebase diagnostics
+│   │   ├── memes/             # Meme data endpoints
+│   │   └── sentiment/         # Sentiment analysis
+│   ├── globals.css            # Global styles
+│   ├── layout.tsx             # Main layout
+│   └── page.tsx               # Home page
 │
 ├── components/                 # UI Components
-│   ├── ui/                     # UI component library
-│   │   ├── accordion.tsx
-│   │   ├── alert-dialog.tsx
-│   │   ├── alert.tsx
-│   │   ├── aspect-ratio.tsx
-│   │   ├── avatar.tsx
-│   │   ├── badge.tsx
-│   │   ├── breadcrumb.tsx
-│   │   ├── button.tsx
-│   │   ├── calendar.tsx
-│   │   ├── card.tsx
-│   │   ├── carousel.tsx
-│   │   ├── chart.tsx
-│   │   ├── checkbox.tsx
-│   │   ├── collapsible.tsx
-│   │   ├── command.tsx
-│   │   ├── context-menu.tsx
-│   │   ├── dialog.tsx
-│   │   ├── drawer.tsx
-│   │   ├── dropdown-menu.tsx
-│   │   ├── form.tsx
-│   │   ├── hover-card.tsx
-│   │   ├── input-otp.tsx
-│   │   ├── input.tsx
-│   │   ├── label.tsx
-│   │   ├── menubar.tsx
-│   │   ├── navigation-menu.tsx
-│   │   ├── pagination.tsx
-│   │   ├── popover.tsx
-│   │   ├── progress.tsx
-│   │   ├── radio-group.tsx
-│   │   ├── resizable.tsx
-│   │   ├── scroll-area.tsx
-│   │   ├── select.tsx
-│   │   ├── separator.tsx
-│   │   ├── sheet.tsx
-│   │   ├── sidebar.tsx
-│   │   ├── skeleton.tsx
-│   │   ├── slider.tsx
-│   │   ├── sonner.tsx
-│   │   ├── switch.tsx
-│   │   ├── table.tsx
-│   │   ├── tabs.tsx
-│   │   ├── textarea.tsx
-│   │   ├── toast.tsx
-│   │   ├── toaster.tsx
-│   │   ├── toggle-group.tsx
-│   │   ├── toggle.tsx
-│   │   └── tooltip.tsx
-│   ├── header.tsx              # Header component
-│   ├── market-sentiment.tsx    # Market sentiment component
-│   ├── submission-form.tsx     # Form for submissions
-│   ├── theme-provider.tsx      # Theme provider component
-│   ├── ticker-table.tsx        # Table for displaying tickers
-│   └── trending-tickers.tsx    # Trending tickers component
+│   ├── ui/                    # Shadcn UI components
+│   ├── header.tsx             # Site header
+│   ├── market-sentiment.tsx   # Market analysis
+│   ├── submission-form.tsx    # User submissions
+│   ├── theme-provider.tsx     # Theme management
+│   ├── ticker-table.tsx       # Meme tickers
+│   └── trending-tickers.tsx   # Trending display
 │
-├── hooks/                      # React hooks
-│   ├── use-mobile.tsx          # Hook for mobile detection
-│   └── use-toast.ts            # Hook for toast notifications
+├── hooks/                     # React Hooks
+│   ├── use-mobile.tsx        # Mobile detection
+│   └── use-toast.ts          # Notifications
 │
-├── lib/                        # Shared utilities and helpers
-│   ├── data.ts                 # Data utilities
-│   ├── firebase-admin.ts       # Firebase Admin SDK initialization
-│   ├── format-utils.ts         # Formatting utilities
-│   ├── types.ts                # TypeScript type definitions
-│   └── utils.ts                # General utility functions
+├── lib/                       # Utilities
+│   ├── data.ts               # Data handling
+│   ├── firebase-admin.ts     # Firebase setup
+│   ├── format-utils.ts       # Formatting
+│   ├── types.ts              # TypeScript types
+│   └── utils.ts              # General utilities
 │
-├── public/                     # Public assets
-│   ├── assets/
-│   │   └── memes/              # Meme image assets
-│   └── ...
+├── python-scripts/            # Python Backend
+│   ├── reddit_scraper.py     # Reddit data collection
+│   ├── forecast_trends.py    # Virality forecasting
+│   └── firebase_admin_setup.py # Firebase Python setup
 │
-├── scripts/                    # Utility scripts
-│   └── format-firebase-key.js  # Script to format Firebase credentials
+├── public/                    # Static Assets
+│   └── assets/
+│       └── memes/            # Meme images
 │
-├── styles/                     # Additional styles
-│   ├── animations.css          # Animation styles
-│   └── globals.css             # Global styles
+├── scripts/                   # Build Scripts
+│   └── format-firebase-key.js # Firebase key formatter
 │
-├── .env.local                  # Local environment variables (generated)
-├── chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json  # Firebase service account key
-├── components.json             # Component configuration
-├── firebase_admin_setup.py     # Firebase Admin SDK setup for Python
-├── next.config.mjs             # Next.js configuration
-├── package.json                # NPM package configuration
-├── pnpm-lock.yaml              # PNPM lock file
-├── postcss.config.mjs          # PostCSS configuration
-├── reddit_scraper.py           # Reddit scraper script
-├── tailwind.config.ts          # Tailwind CSS configuration
-├── trending_memes.json         # JSON output from scrapers
-└── tsconfig.json               # TypeScript configuration
+└── styles/                    # CSS
+    ├── animations.css        # Animations
+    └── globals.css           # Global styles
 ```
 
-## The First Meta-Memecoin
-
-## Firebase Integration
-
-The project uses Firebase Admin SDK for backend services. The setup is in `firebase_admin_setup.py`, which initializes Firebase with the service account key and provides a Firestore client for database operations.
-
-## Scripts
-
-- `reddit_scraper.py` - A Python script to scrape Reddit for trending memes and sentiment data
-- `format-firebase-key.js` - A JavaScript tool to format Firebase credentials for Vercel deployment
-
-## Technology Stack
+## 🛠️ Technology Stack
 
 ### Frontend
-- **Next.js 15** - React framework with App Router architecture
-- **React 19** - UI library
-- **TypeScript** - Typed JavaScript
-- **Tailwind CSS** - Utility-first CSS framework
-- **Shadcn UI** - Component library based on Radix UI and Tailwind
-- **Radix UI** - Unstyled, accessible UI components
-- **Framer Motion** - Animation library
-- **date-fns** - Date utility library
-- **React Hook Form** - Form validation library
+- **Framework**: Next.js 15 with App Router
+- **UI Library**: React 19
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Shadcn UI
+- **Components**: Radix UI
+- **Animation**: Framer Motion
+- **Forms**: React Hook Form
+- **Dates**: date-fns
 
 ### Backend
-- **Next.js API Routes** - Serverless functions
-- **Firebase Admin SDK** - Server-side Firebase access
-- **Firestore** - NoSQL document database
+- **API**: Next.js API Routes
+- **Database**: Firebase Firestore
+- **Auth**: Firebase Authentication
+- **Storage**: Firebase Storage
 
 ### Data Processing
-- **Python** - Scripting language for data collection
-- **Reddit API (PRAW)** - Data source for trending memes
-- **Requests** - HTTP client for Python
-- **Beautiful Soup** - HTML parsing library
-- **OpenAI API** - AI-powered sentiment analysis
+- **Language**: Python
+- **APIs**: Reddit API, OpenAI API
+- **Libraries**: Requests, Beautiful Soup
+- **Analysis**: Custom virality algorithms
 
-### Deployment & Infrastructure
-- **Vercel** - Hosting and deployment platform
-- **Environment Variables** - Configuration management
-- **GitHub** - Version control
+### Infrastructure
+- **Hosting**: Vercel
+- **CI/CD**: GitHub Actions
+- **Package Manager**: pnpm
+- **Linting**: ESLint
+- **CSS Processing**: PostCSS + Autoprefixer
 
-### Tools & Utilities
-- **pnpm** - Fast, disk space efficient package manager
-- **ESLint** - JavaScript linter
-- **PostCSS** - CSS transformation tool
-- **Autoprefixer** - CSS vendor prefixing
-- **TensorFlow.js** - Machine learning for the browser (planned)
+## 🚀 Getting Started
 
-## Getting Started
+### Prerequisites
+- Node.js 18+
+- Python 3.9+
+- pnpm
+- Firebase account
 
-1. Install dependencies:
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/4chan500.git
+cd 4chan500
 ```
+
+2. Install dependencies:
+```bash
 pnpm install
 ```
 
-2. Run the development server:
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+# Edit .env.local with your Firebase credentials
 ```
+
+4. Start the development server:
+```bash
 pnpm dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+5. Open [http://localhost:3000](http://localhost:3000)
 
-## Deploying to Vercel
+## 🔧 Development
 
-### Firebase Configuration for Vercel
+### Python Scripts
+- `reddit_scraper.py`: Fetches and processes Reddit memes
+- `forecast_trends.py`: Calculates virality metrics
+- `firebase_admin_setup.py`: Firebase Python SDK setup
 
-The project is configured to work both locally and on Vercel. For Vercel deployment, you need to set up Firebase environment variables:
+### Firebase Setup
 
-1. Run the helper script to generate properly formatted environment variables:
-   ```
-   node scripts/format-firebase-key.js
-   ```
+1. Generate Firebase credentials:
+```bash
+node scripts/format-firebase-key.js
+```
 
-2. Go to your Vercel project settings
-3. Navigate to the "Environment Variables" section
-4. Add the following variables exactly as shown by the script output:
-   - `FIREBASE_PROJECT_ID`
-   - `FIREBASE_CLIENT_EMAIL`
-   - `FIREBASE_PRIVATE_KEY` - **IMPORTANT**: Include the double quotes around the value!
+2. Add to Vercel environment variables:
+- `FIREBASE_PROJECT_ID`
+- `FIREBASE_CLIENT_EMAIL`
+- `FIREBASE_PRIVATE_KEY` (with quotes)
 
-5. After adding the environment variables, redeploy your application from the Vercel dashboard or push a new commit.
+### Deployment
 
-### Troubleshooting Vercel Deployment
+1. Push to main branch:
+```bash
+git push origin main
+```
 
-If your application shows "Firebase not configured" on Vercel:
+2. Vercel will automatically deploy
 
-1. **Run the helper script** to generate properly formatted values:
-   ```
-   node scripts/format-firebase-key.js
-   ```
+## 🐛 Troubleshooting
 
-2. **In the Vercel dashboard**:
-   - Go to your project settings
-   - Select "Environment Variables"
-   - Delete any existing Firebase variables
-   - Add these three variables **exactly** as shown in the script output:
-     - `FIREBASE_PROJECT_ID`
-     - `FIREBASE_CLIENT_EMAIL`
-     - `FIREBASE_PRIVATE_KEY` (include the quotes around the value!)
+### Common Issues
 
-3. **After adding variables**:
-   - Redeploy your application (Project > Deployments > "Redeploy" on your latest deployment)
-   - Or click Settings > Deployments > "Create a new deployment" 
+1. **Firebase Not Configured**
+   - Check environment variables
+   - Verify service account key format
+   - Clear Vercel cache
 
-4. **If it still doesn't work**:
-   - Visit the diagnostic endpoint at `/api/firebase-test` on your Vercel deployment
-   - Check the values of the environment variables
-   - Review your Vercel Function logs for any Firebase initialization errors
+2. **Python Script Errors**
+   - Verify Python version
+   - Check dependencies
+   - Review Firebase permissions
 
-5. **Common Issues**:
-   - Quotes missing from private key value
-   - Private key format incorrect (needs `\n` for newlines)
-   - Project cached with old environment variables (try a clean redeploy)
+3. **Deployment Issues**
+   - Check Vercel logs
+   - Verify environment variables
+   - Clear build cache
 
-### Local Development
+## 📝 License
 
-For local development, you can use the Firebase service account JSON file directly. The app is configured to look for `chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json` in the project root.
+MIT License - see LICENSE file for details
 
-Alternatively, you can create a `.env.local` file with the same environment variables as above for local development.
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📞 Support
+
+For support, email support@4chan500.com or open an issue.

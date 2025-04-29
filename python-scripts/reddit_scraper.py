@@ -51,9 +51,13 @@ def process_meme_data(post_data):
     # Ensure upvote_ratio is a valid number before calculation
     upvote_ratio = float(upvote_ratio) if upvote_ratio is not None else 0.5
     
-    # Calculate derived metrics with proper rounding
+    # Calculate derived metrics
     lulz_score = round((upvotes * upvote_ratio) + (comments * 1.5), 2)
     vibe_shift = round((upvote_ratio - 0.5) * 100, 2)
+
+    # Forecast score (early virality potential)
+    hours_since_post = max((datetime.datetime.utcnow().timestamp() - created_utc) / 3600, 0.1)
+    forecast_score = round((upvotes * upvote_ratio + comments * 2) / hours_since_post, 2)
     
     # Generate ticker (first 8 characters, uppercase with underscores)
     ticker = name[:8].upper().replace(" ", "_")
@@ -79,6 +83,7 @@ def process_meme_data(post_data):
             "created_utc": created_utc,
             "lulzScore": lulz_score,
             "vibeShift": vibe_shift,
+            "forecastScore": forecast_score,
             "ticker": ticker,
             "scraped_at": datetime.datetime.now().timestamp()
         }

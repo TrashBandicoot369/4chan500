@@ -33,8 +33,10 @@ export default function RootLayout({
             </div>
           </div>
           
-          {/* Main content */}
-          {children}
+          {/* Main content with responsive padding */}
+          <div className="px-4 md:px-12 lg:px-24">
+            {children}
+          </div>
           
           {/* Footer */}
           <div className="p-1 bg-[#13233a] text-white text-xs border-t border-[#555555] flex justify-between">

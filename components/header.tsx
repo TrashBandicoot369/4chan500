@@ -1,3 +1,5 @@
+import { Timestamp } from './timestamp'
+
 export function Header() {
   return (
     <header className="border border-[#555555] mb-2 bg-[#171717]">
@@ -9,7 +11,7 @@ export function Header() {
           <div className="text-[#ffd75e]">RANK: <span className="text-[#00b04d]">TRENDING</span></div>
         </div>
         <div className="flex justify-between text-xs">
-          <div className="text-[#ffd75e]">LAST UPDATE: {new Date().toLocaleString()}</div>
+          <Timestamp />
         </div>
       </div>
       <div className="bg-[#13233a] text-white text-xs px-2 py-1 flex space-x-4 border-t border-[#555555]">

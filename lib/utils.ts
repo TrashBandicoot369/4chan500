@@ -50,6 +50,56 @@ export function getMemeHeatIndex(volume: number): number {
   return parseFloat((volume / 1000000).toFixed(1)) || 1.0;
 }
 
+/**
+ * Fetches token data from Dexscreener API
+ * @param ca Contract address of the token
+ * @returns Object with marketCap and volume24h, or null if data not available
+ */
+export async function fetchDexData(ca: string): Promise<{ marketCap: number; volume24h: number } | null> {
+  try {
+    const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${ca}`);
+    
+    if (!response.ok) {
+      console.error(`Dexscreener API error: ${response.status}`);
+      return null;
+    }
+    
+    const data = await response.json();
+    
+    // Check if valid data was returned
+    if (!data.pairs || !data.pairs.length) {
+      console.error('No pairs found for this token');
+      return null;
+    }
+    
+    // Use the first pair's data (usually the most liquid)
+    const pair = data.pairs[0];
+    
+    return {
+      marketCap: parseFloat(pair.fdv) || 0,
+      volume24h: parseFloat(pair.volume.h24) || 0
+    };
+  } catch (error) {
+    console.error('Error fetching Dexscreener data:', error);
+    return null;
+  }
+}
+
+// Format market cap to be displayed
+export function formatMarketCap(marketCap: number): string {
+  if (!marketCap) return 'N/A';
+  
+  if (marketCap >= 1e9) {
+    return `$${(marketCap / 1e9).toFixed(2)}B`;
+  } else if (marketCap >= 1e6) {
+    return `$${(marketCap / 1e6).toFixed(2)}M`;
+  } else if (marketCap >= 1e3) {
+    return `$${(marketCap / 1e3).toFixed(2)}K`;
+  } else {
+    return `$${marketCap.toFixed(2)}`;
+  }
+}
+
 // Re-export everything from format-utils.ts
 // This file is kept for backward compatibility with existing imports
 
