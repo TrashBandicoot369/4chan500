@@ -48,8 +48,11 @@ export default function Home() {
       "FLASH ALERT: WSB activity spike detected",
     ]
     
+    // Use a counter approach instead of Date.now() to avoid hydration issues
+    const uniqueId = Math.floor(Math.random() * 1000000);
+    
     const newAlert = {
-      id: Date.now(),
+      id: uniqueId,
       text: alerts[Math.floor(Math.random() * alerts.length)],
       position: {
         top: `${Math.random() * 80 + 10}%`,

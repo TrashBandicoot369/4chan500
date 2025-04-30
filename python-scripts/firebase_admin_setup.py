@@ -16,7 +16,7 @@ def initialize_firebase():
         cred = credentials.Certificate(cfg)
     else:
         # Fallback: Load from local service account JSON
-        cred_path = os.path.join(os.path.dirname(__file__), "..", "chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json")
+        cred_path = os.path.join(os.path.dirname(__file__), "..", "chan500-firebase-adminsdk-fbsvc-aa307e321e.json")
         cred_path = os.path.abspath(cred_path)
         with open(cred_path, "r") as f:
             cfg = json.load(f)

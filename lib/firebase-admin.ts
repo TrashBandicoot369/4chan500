@@ -60,7 +60,8 @@ export function initFirebase(): App | null {
         const { readFileSync } = require('fs');
         const path = require('path');
         
-        const serviceAccountPath = path.join(process.cwd(), 'chan500-firebase-adminsdk-fbsvc-5f4b8c5c86.json');
+        // Use the correct service account file name
+        const serviceAccountPath = path.join(process.cwd(), 'chan500-firebase-adminsdk-fbsvc-aa307e321e.json');
         console.log('Looking for service account at:', serviceAccountPath);
         
         const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'));

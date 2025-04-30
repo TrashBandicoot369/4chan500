@@ -1,5 +1,8 @@
 import type { MemeTicker } from "./types"
 
+// Use a fixed timestamp for static data to avoid hydration issues
+const STATIC_TIMESTAMP = 1682425800000; // Fixed timestamp for static data
+
 export const initialMemes: MemeTicker[] = [
   {
     id: "1",
@@ -9,7 +12,7 @@ export const initialMemes: MemeTicker[] = [
     price: 420.69,
     percentChange: 69.42,
     volume: 8008135,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "2",
@@ -19,7 +22,7 @@ export const initialMemes: MemeTicker[] = [
     price: 69.42,
     percentChange: -4.2,
     volume: 1337420,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "3",
@@ -29,7 +32,7 @@ export const initialMemes: MemeTicker[] = [
     price: 0.01,
     percentChange: 1000.0,
     volume: 9000001,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "4",
@@ -39,7 +42,7 @@ export const initialMemes: MemeTicker[] = [
     price: 0.5,
     percentChange: -99.9,
     volume: 1234567,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "5",
@@ -49,7 +52,7 @@ export const initialMemes: MemeTicker[] = [
     price: 1337.0,
     percentChange: 13.37,
     volume: 4206969,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "6",
@@ -59,7 +62,7 @@ export const initialMemes: MemeTicker[] = [
     price: 20.0,
     percentChange: 5.0,
     volume: 8675309,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "7",
@@ -69,7 +72,7 @@ export const initialMemes: MemeTicker[] = [
     price: 999.99,
     percentChange: 42.0,
     volume: 6942069,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "8",
@@ -79,7 +82,7 @@ export const initialMemes: MemeTicker[] = [
     price: 34.95,
     percentChange: -2.5,
     volume: 5318008,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "9",
@@ -89,7 +92,7 @@ export const initialMemes: MemeTicker[] = [
     price: 80.08,
     percentChange: 8.008,
     volume: 8008135,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "10",
@@ -99,7 +102,7 @@ export const initialMemes: MemeTicker[] = [
     price: 0.42069,
     percentChange: -12.34,
     volume: 1234321,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "11",
@@ -109,7 +112,7 @@ export const initialMemes: MemeTicker[] = [
     price: 4.0,
     percentChange: 0.01,
     volume: 4004004,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "12",
@@ -119,7 +122,7 @@ export const initialMemes: MemeTicker[] = [
     price: 1000000.0,
     percentChange: 100.0,
     volume: 9999999,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "13",
@@ -129,7 +132,7 @@ export const initialMemes: MemeTicker[] = [
     price: 42.0,
     percentChange: -42.0,
     volume: 3141592,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "14",
@@ -139,7 +142,7 @@ export const initialMemes: MemeTicker[] = [
     price: 69.0,
     percentChange: 4.20,
     volume: 8675309,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "15",
@@ -149,7 +152,7 @@ export const initialMemes: MemeTicker[] = [
     price: 88.88,
     percentChange: 8.8,
     volume: 7654321,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "16",
@@ -159,7 +162,7 @@ export const initialMemes: MemeTicker[] = [
     price: 150.0,
     percentChange: 15.0,
     volume: 5555555,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "17",
@@ -169,7 +172,7 @@ export const initialMemes: MemeTicker[] = [
     price: 25.0,
     percentChange: 2.5,
     volume: 2222222,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "18",
@@ -179,7 +182,7 @@ export const initialMemes: MemeTicker[] = [
     price: 35.0,
     percentChange: 3.5,
     volume: 3333333,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "19",
@@ -189,7 +192,7 @@ export const initialMemes: MemeTicker[] = [
     price: 120.0,
     percentChange: 12.0,
     volume: 4444444,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "20",
@@ -199,7 +202,7 @@ export const initialMemes: MemeTicker[] = [
     price: 250.0,
     percentChange: 25.0,
     volume: 6666666,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "21",
@@ -209,7 +212,7 @@ export const initialMemes: MemeTicker[] = [
     price: 222.0,
     percentChange: 22.2,
     volume: 2222222,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "22",
@@ -219,7 +222,7 @@ export const initialMemes: MemeTicker[] = [
     price: 333.0,
     percentChange: 33.3,
     volume: 3333333,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "23",
@@ -229,7 +232,7 @@ export const initialMemes: MemeTicker[] = [
     price: 123.45,
     percentChange: 23.45,
     volume: 5454545,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "24",
@@ -239,7 +242,7 @@ export const initialMemes: MemeTicker[] = [
     price: 0.01,
     percentChange: -99.0,
     volume: 1010101,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "25",
@@ -249,7 +252,7 @@ export const initialMemes: MemeTicker[] = [
     price: 456.0,
     percentChange: 45.6,
     volume: 4564564,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "26",
@@ -259,7 +262,7 @@ export const initialMemes: MemeTicker[] = [
     price: 0.5,
     percentChange: -50.0,
     volume: 5050505,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "27",
@@ -269,7 +272,7 @@ export const initialMemes: MemeTicker[] = [
     price: 24.99,
     percentChange: 2.49,
     volume: 2424242,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "28",
@@ -279,7 +282,7 @@ export const initialMemes: MemeTicker[] = [
     price: 101.01,
     percentChange: 10.1,
     volume: 1010101,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "29",
@@ -289,7 +292,7 @@ export const initialMemes: MemeTicker[] = [
     price: 33.33,
     percentChange: 33.33,
     volume: 3333333,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "30",
@@ -299,7 +302,7 @@ export const initialMemes: MemeTicker[] = [
     price: 42.42,
     percentChange: 4.24,
     volume: 4242424,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "31",
@@ -309,7 +312,7 @@ export const initialMemes: MemeTicker[] = [
     price: 6.66,
     percentChange: -66.6,
     volume: 6666666,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "32",
@@ -319,7 +322,7 @@ export const initialMemes: MemeTicker[] = [
     price: 9999.99,
     percentChange: 99.99,
     volume: 9999999,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "33",
@@ -329,7 +332,7 @@ export const initialMemes: MemeTicker[] = [
     price: 66.6,
     percentChange: 66.6,
     volume: 6666666,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "34",
@@ -339,7 +342,7 @@ export const initialMemes: MemeTicker[] = [
     price: 314.15,
     percentChange: 3.1415,
     volume: 3141592,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "35",
@@ -349,7 +352,7 @@ export const initialMemes: MemeTicker[] = [
     price: 789.0,
     percentChange: 78.9,
     volume: 7890123,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "36",
@@ -359,7 +362,7 @@ export const initialMemes: MemeTicker[] = [
     price: 88.0,
     percentChange: 8.8,
     volume: 8888888,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "37",
@@ -369,7 +372,7 @@ export const initialMemes: MemeTicker[] = [
     price: 9001.0,
     percentChange: 90.01,
     volume: 9000100,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "38",
@@ -379,7 +382,7 @@ export const initialMemes: MemeTicker[] = [
     price: 28.05,
     percentChange: 280.5,
     volume: 2805000,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "39",
@@ -389,7 +392,7 @@ export const initialMemes: MemeTicker[] = [
     price: 0.01,
     percentChange: -99.99,
     volume: 1337000,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "40",
@@ -399,7 +402,7 @@ export const initialMemes: MemeTicker[] = [
     price: 111.11,
     percentChange: 11.11,
     volume: 1111111,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "41",
@@ -409,7 +412,7 @@ export const initialMemes: MemeTicker[] = [
     price: 25.0,
     percentChange: 2.5,
     volume: 2525252,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "42",
@@ -419,7 +422,7 @@ export const initialMemes: MemeTicker[] = [
     price: 987.65,
     percentChange: -9.87,
     volume: 9876543,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "43",
@@ -429,7 +432,7 @@ export const initialMemes: MemeTicker[] = [
     price: 456.78,
     percentChange: 45.67,
     volume: 4567890,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "44",
@@ -439,7 +442,7 @@ export const initialMemes: MemeTicker[] = [
     price: 123.45,
     percentChange: 12.34,
     volume: 1234567,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "45",
@@ -449,7 +452,7 @@ export const initialMemes: MemeTicker[] = [
     price: 567.89,
     percentChange: 56.78,
     volume: 5678901,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
   {
     id: "46",
@@ -459,6 +462,6 @@ export const initialMemes: MemeTicker[] = [
     price: 1987.09,
     percentChange: 19.87,
     volume: 1987000,
-    timestamp: Date.now(),
+    timestamp: STATIC_TIMESTAMP,
   },
 ]

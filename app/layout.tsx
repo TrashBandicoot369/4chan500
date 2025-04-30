@@ -1,6 +1,7 @@
 import "./globals.css"
 import "../styles/animations.css"
 import type { Metadata } from "next"
+import { FooterTimestamp } from "@/components/FooterTimestamp"
 
 // Need to define metadata outside the client component
 export const metadata: Metadata = {
@@ -38,20 +39,8 @@ export default function RootLayout({
             {children}
           </div>
           
-          {/* Footer */}
-          <div className="p-1 bg-[#13233a] text-white text-xs border-t border-[#555555] flex justify-between">
-            <div>Last Updated: <span id="timestamp">Server Time</span></div>
-            <div>F1:Help | F2:Menu | F3:Charts | F4:Index</div>
-          </div>
-          
-          {/* Simple script to update timestamp */}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                document.getElementById('timestamp').innerText = new Date().toLocaleString();
-              `,
-            }}
-          />
+          {/* Footer with client-side timestamp */}
+          <FooterTimestamp />
         </div>
       </body>
     </html>

@@ -17,5 +17,5 @@ export function Timestamp() {
     return () => clearInterval(interval)
   }, [])
 
-  return <div className="text-[#ffd75e]">LAST UPDATE: {timestamp}</div>
+  return <div className="text-[#ffd75e]" suppressHydrationWarning>LAST UPDATE: {timestamp}</div>
 } 

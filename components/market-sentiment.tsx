@@ -1,16 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getFirestore, collection, query, orderBy, limit, getDocs } from "firebase/firestore"
-import { initializeApp } from "firebase/app"
-
-const firebaseConfig = {
-  apiKey: "dummy",
-  authDomain: "dummy",
-  projectId: "chan500",
-}
-const app = initializeApp(firebaseConfig)
-const firestore = getFirestore(app)
+import { db } from "@/lib/firebase"
+import { collection, query, orderBy, limit, getDocs } from "firebase/firestore"
 
 export default function MarketSentiment() {
   const [summary, setSummary] = useState<string | null>(null)
@@ -39,7 +31,7 @@ export default function MarketSentiment() {
   useEffect(() => {
     const fetchTopForecasts = async () => {
       try {
-        const snapRef = collection(firestore, "trending_snapshots")
+        const snapRef = collection(db, "trending_snapshots")
         const q = query(snapRef, orderBy("timestamp", "desc"), limit(1))
         const snapshot = await getDocs(q)
         if (!snapshot.empty) {
@@ -55,9 +47,9 @@ export default function MarketSentiment() {
 
   function getShortSummary(title: string) {
     const lower = title.toLowerCase()
-    if (lower.includes("same")) return "Existential dread never fails. This meme’s farming engagement on repeat."
+    if (lower.includes("same")) return "Existential dread never fails. This meme's farming engagement on repeat."
     if (lower.includes("cat")) return "Top hats and teacups. A polite scroll pause, maybe more."
-    if (lower.includes("looking")) return "You’re looking at it. That’s it. That’s the joke."
+    if (lower.includes("looking")) return "You're looking at it. That's it. That's the joke."
     return "This meme has legs — or at least a shot. Keep an eye on it."
   }
 
@@ -66,16 +58,18 @@ export default function MarketSentiment() {
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-bold">Meme Market Sentiment</h2>
         {lastUpdated && (
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(summary || "")
-              setCopied(true)
-              setTimeout(() => setCopied(false), 2000)
-            }}
-            className="text-xs bg-gray-700 px-2 py-1 rounded"
-          >
-            {copied ? "Copied!" : "Copy"}
-          </button>
+          <div suppressHydrationWarning>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(summary || "")
+                setCopied(true)
+                setTimeout(() => setCopied(false), 2000)
+              }}
+              className="text-xs bg-gray-700 px-2 py-1 rounded"
+            >
+              {copied ? "Copied!" : "Copy"}
+            </button>
+          </div>
         )}
       </div>
 

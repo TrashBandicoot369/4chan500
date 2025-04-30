@@ -4,6 +4,9 @@ import { NextResponse } from "next/server"
 import { DocumentData } from "firebase-admin/firestore"
 import { getFirestoreInstance } from "@/lib/firebase-admin"
 
+// Use fixed timestamp for consistency
+const API_TIMESTAMP = 1682425800000;
+
 export async function GET() {
   try {
     // Get Firestore instance
@@ -37,7 +40,7 @@ export async function GET() {
             price: typeof data.lulzScore === 'number' ? data.lulzScore : Math.floor(Math.random() * 1000), 
             percentChange: randomChange, // Use random number instead
             volume: typeof data.upvotes === 'number' ? data.upvotes : Math.floor(Math.random() * 100000),
-            timestamp: data.created_utc || Date.now(),
+            timestamp: data.created_utc || API_TIMESTAMP,
             link: data.link || ''
           };
         });
@@ -53,7 +56,7 @@ export async function GET() {
           price: 3.50,
           percentChange: -42.0,
           volume: 50000,
-          timestamp: Date.now(),
+          timestamp: API_TIMESTAMP,
           link: ""
         }])
       }
@@ -69,7 +72,7 @@ export async function GET() {
         price: 3.50,
         percentChange: 2.5,
         volume: 50000,
-        timestamp: Date.now(),
+        timestamp: API_TIMESTAMP,
         link: "https://knowyourmeme.com/photos/sample"
       }])
     }
@@ -84,7 +87,7 @@ export async function GET() {
         price: 0.01,
         percentChange: -99.9,
         volume: 1,
-        timestamp: Date.now(),
+        timestamp: API_TIMESTAMP,
         link: ""
       }],
       { status: 200 } // Still return 200 so client can display the error meme
